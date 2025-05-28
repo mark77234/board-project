@@ -1,14 +1,58 @@
-<h2>고객센터 게시판</h2>
-<a href="/board/new">[글쓰기]</a>
-<ul>
-  <% posts.forEach(post => { %>
-  <li <%= post.parent_id ? 'style="margin-left:30px"' : '' %>>
-    <a href="/board/view/<%= post.id %>">
-      <%= post.parent_id ? '[답글]' : '글 수정' %> <%= post.title %> - <%=
-      post.author %>
-    </a>
-    (<a href="/board/edit/<%= post.id %>">수정</a> /
-    <a href="/board/delete/<%= post.id %>">삭제</a>)
-  </li>
-  <% }) %>
-</ul>
+<style>
+  .board-container {
+    max-width: 700px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+  }
+
+  .board-title {
+    text-align: center;
+    color: #333;
+  }
+
+  .post-list {
+    list-style: none;
+    padding: 0;
+  }
+
+  .post-item {
+    background: #fff;
+    border: 1px solid #ccc;
+    padding: 10px 15px;
+    margin: 10px 0;
+    border-radius: 6px;
+  }
+
+  .reply {
+    margin-left: 30px;
+    background-color: #f1f1f1;
+  }
+
+  .post-item a {
+    text-decoration: none;
+    color: #007bff;
+  }
+
+  .post-item a:hover {
+    text-decoration: underline;
+  }
+</style>
+<div class="board-container">
+  <h2 class="board-title">고객센터 게시판</h2>
+  <a href="/board/new">[글쓰기]</a>
+  <ul class="post-list">
+    <% posts.forEach(post => { %>
+    <li class="post-item <%= post.parent_id ? 'reply' : '' %>">
+      <a href="/board/view/<%= post.id %>">
+        <%= post.parent_id ? '[답글]' : '글 수정' %> <%= post.title %> - <%=
+        post.author %>
+      </a>
+      (<a href="/board/edit/<%= post.id %>">수정</a> /
+      <a href="/board/delete/<%= post.id %>">삭제</a>)
+    </li>
+    <% }) %>
+  </ul>
+</div>
