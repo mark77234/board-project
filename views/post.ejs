@@ -1,22 +1,79 @@
-<h2><%= post ? '글 수정' : (parentId ? '답글 작성' : '새 글 작성') %></h2>
-<form
-  action="<%= post ? '/board/edit/' + post.id : '/board/new' %>"
-  method="post"
->
-  <input
-    type="hidden"
-    name="parent_id"
-    value="<%= post ? post.parent_id : parentId %>"
-  />
-  <input
-    type="text"
-    name="title"
-    placeholder="제목"
-    value="<%= post?.title || '' %>"
-    required
-  /><br />
-  <textarea name="content" placeholder="내용">
+<style>
+  .form-container {
+    max-width: 600px;
+    margin: 30px auto;
+    padding: 25px;
+    background-color: #fafafa;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  }
+
+  h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+    font-weight: 700;
+  }
+
+  input[type="text"],
+  textarea {
+    width: 100%;
+    padding: 12px 15px;
+    margin: 10px 0 20px 0;
+    border: 1.5px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+    resize: vertical;
+    transition: border-color 0.3s ease;
+  }
+
+  input[type="text"]:focus,
+  textarea:focus {
+    border-color: #007bff;
+    outline: none;
+  }
+
+  button[type="submit"] {
+    display: block;
+    width: 100%;
+    padding: 12px 0;
+    background-color: #007bff;
+    color: white;
+    font-size: 18px;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  button[type="submit"]:hover {
+    background-color: #0056b3;
+  }
+</style>
+
+<div class="form-container">
+  <h2><%= post ? '글 수정' : (parentId ? '답글 작성' : '새 글 작성') %></h2>
+  <form
+    action="<%= post ? '/board/edit/' + post.id : '/board/new' %>"
+    method="post"
+  >
+    <input
+      type="hidden"
+      name="parent_id"
+      value="<%= post ? post.parent_id : parentId %>"
+    />
+    <input
+      type="text"
+      name="title"
+      placeholder="제목"
+      value="<%= post?.title || '' %>"
+      required
+    />
+    <textarea name="content" placeholder="내용" rows="10" required>
 <%= post?.content || '' %></textarea
-  ><br />
-  <button type="submit">저장</button>
-</form>
+    >
+    <button type="submit">저장</button>
+  </form>
+</div>
