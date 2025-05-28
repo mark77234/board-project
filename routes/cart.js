@@ -61,4 +61,15 @@ router.get("/", (req, res) => {
   );
 });
 
+// 장바구니에서 상품 제거
+router.post("/remove/:id", (req, res) => {
+  const productId = req.params.id;
+
+  if (req.session.cart && req.session.cart[productId]) {
+    delete req.session.cart[productId];
+  }
+
+  res.redirect("/cart");
+});
+
 module.exports = router;

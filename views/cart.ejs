@@ -94,6 +94,25 @@
       </div>
       <div class="total">총 합계: <%= item.formattedTotal %> 원</div>
       <hr />
+      <form
+        action="/cart/remove/<%= item.id %>"
+        method="POST"
+        style="text-align: right"
+      >
+        <button
+          type="submit"
+          style="
+            background-color: transparent;
+            color: #d32f2f;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 5px;
+          "
+        >
+          ❌ 삭제
+        </button>
+      </form>
       <% }) %>
       <a href="/resource" class="btn-back">상품목록으로 돌아가기</a>
     </div>
