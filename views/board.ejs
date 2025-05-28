@@ -1,0 +1,14 @@
+<h2>고객센터 게시판</h2>
+<a href="/board/new">[글쓰기]</a>
+<ul>
+  <% posts.forEach(post => { %>
+  <li <%= post.parent_id ? 'style="margin-left:30px"' : '' %>>
+    <a href="/board/view/<%= post.id %>">
+      <%= post.parent_id ? '[답글]' : '글 수정' %> <%= post.title %> - <%=
+      post.author %>
+    </a>
+    (<a href="/board/edit/<%= post.id %>">수정</a> /
+    <a href="/board/delete/<%= post.id %>">삭제</a>)
+  </li>
+  <% }) %>
+</ul>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>회원가입</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: "Noto Sans KR", sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background: #f5f5f5;
+      }
+
+      .register-container {
+        background: white;
+        padding: 40px;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        width: 320px;
+      }
+
+      h2 {
+        margin-bottom: 24px;
+        color: #333;
+      }
+
+      input {
+        width: 100%;
+        padding: 12px;
+        margin-bottom: 16px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-size: 16px;
+      }
+
+      button {
+        width: 100%;
+        padding: 12px;
+        background-color: #ff3f3f;
+        color: white;
+        font-size: 16px;
+        font-weight: bold;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      button:hover {
+        background-color: #e63232;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="register-container">
+      <h2>회원가입</h2>
+      <form action="/user/register" method="post">
+        <input
+          type="text"
+          name="username"
+          placeholder="아이디"
+          required
+        /><br />
+        <input type="text" name="name" placeholder="이름" required /><br />
+        <input
+          type="password"
+          name="password"
+          placeholder="비밀번호"
+          required
+        /><br />
+        <button type="submit">가입하기</button>
+      </form>
+    </div>
+  </body>
+</html>
