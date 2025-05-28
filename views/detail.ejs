@@ -1,4 +1,55 @@
-<h2><%= post.title %></h2>
-<p><%= post.content %></p>
-<p>작성자: <%= post.author %> | 작성일: <%= post.created_at %></p>
-<a href="/board/reply/<%= post.id %>">[답글]</a>
+<style>
+  .detail-container {
+    max-width: 700px;
+    margin: 40px auto;
+    padding: 30px 40px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+  }
+
+  h2 {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+    font-weight: 700;
+    color: #222;
+  }
+
+  p {
+    font-size: 1.125rem;
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+
+  .meta-info {
+    font-size: 0.9rem;
+    color: #777;
+    margin-bottom: 30px;
+  }
+
+  a.reply-link {
+    display: inline-block;
+    padding: 10px 25px;
+    background-color: #007bff;
+    color: white;
+    border-radius: 7px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+  }
+
+  a.reply-link:hover {
+    background-color: #0056b3;
+  }
+</style>
+
+<div class="detail-container">
+  <h2><%= post.title %></h2>
+  <p><%= post.content %></p>
+  <p class="meta-info">
+    작성자: <%= post.author %> | 작성일: <%= post.created_at %>
+  </p>
+  <a href="/board/reply/<%= post.id %>" class="reply-link">답글 작성</a>
+</div>
