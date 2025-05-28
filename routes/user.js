@@ -50,7 +50,7 @@ router.post("/login", (req, res) => {
       const match = await bcrypt.compare(password, user.password);
       if (match) {
         req.session.user = user;
-        res.redirect("/");
+        res.redirect("/board");
       } else {
         res.send("비밀번호가 일치하지 않습니다.");
       }
