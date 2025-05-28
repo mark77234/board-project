@@ -72,4 +72,13 @@ router.post("/remove/:id", (req, res) => {
   res.redirect("/cart");
 });
 
+router.post("/checkout", (req, res) => {
+  req.session.cart = {}; // 장바구니 비우기
+  res.redirect("checkout/complete"); // 결제 완료 페이지로 리다이렉트
+});
+
+router.get("/checkout/complete", (req, res) => {
+  res.render("checkout");
+});
+
 module.exports = router;

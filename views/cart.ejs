@@ -115,6 +115,26 @@
       </form>
       <% }) %>
       <a href="/resource" class="btn-back">상품목록으로 돌아가기</a>
+      <form action="/cart/checkout" method="POST">
+        <button
+          type="submit"
+          style="
+            display: block;
+            width: 100%;
+            text-align: center;
+            margin-top: 10px;
+            padding: 12px 0;
+            background-color: #4caf50;
+            color: white;
+            font-weight: 700;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+          "
+        >
+          결제하기
+        </button>
+      </form>
     </div>
   </body>
 </html>
