@@ -42,3 +42,35 @@ footer {
   padding: 1em;
   margin-top: 2em;
 }
+
+/* 회사 로고 스타일 - 왼쪽 상단 고정 */
+.company-logo {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  font-size: 1.8rem;
+  font-weight: 700;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #d32f2f;
+  text-decoration: none;
+  z-index: 1000;
+}
+
+/* 마우스 올렸을 때 색 변화 */
+.company-logo:hover {
+  color: #b71c1c;
+  text-decoration: underline;
+}
+
+/* resource.ejs 헤더 스타일 */
+.resource-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* board.ejs header 스타일 */
+.board-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
