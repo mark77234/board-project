@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>장바구니 상세</title>
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: #f9f9f9;
+        margin: 0;
+        padding: 20px;
+        color: #333;
+      }
+      header {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+      header a {
+        text-decoration: none;
+        color: #d32f2f;
+        font-size: 2.5rem;
+        font-weight: 700;
+      }
+      .container {
+        max-width: 600px;
+        margin: 0 auto;
+        background: #fff;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      }
+      h1 {
+        margin-bottom: 30px;
+        font-weight: 700;
+        color: #222;
+        text-align: center;
+      }
+      .product-detail {
+        font-size: 1.2rem;
+        margin-bottom: 20px;
+      }
+      .label {
+        font-weight: 600;
+        color: #555;
+      }
+      .value {
+        color: #111;
+        margin-left: 10px;
+      }
+      .total {
+        font-size: 1.3rem;
+        font-weight: 700;
+        text-align: right;
+        margin-top: 30px;
+        color: #d32f2f;
+      }
+      .btn-back {
+        display: block;
+        width: 100%;
+        text-align: center;
+        margin-top: 40px;
+        padding: 12px 0;
+        background-color: #d32f2f;
+        color: white;
+        font-weight: 700;
+        border-radius: 6px;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+      }
+      .btn-back:hover {
+        background-color: #b71c1c;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <a href="/">테무찬</a>
+    </header>
+    <div class="container">
+      <h1>장바구니 상세</h1>
+      <% items.forEach(function(item) { %>
+      <div class="product-detail">
+        <span class="label">상품명:</span>
+        <span class="value"><%= item.name %></span>
+      </div>
+      <div class="product-detail">
+        <span class="label">가격:</span>
+        <span class="value"><%= item.formattedPrice %> 원</span>
+      </div>
+      <div class="product-detail">
+        <span class="label">수량:</span>
+        <span class="value"><%= item.quantity %> 개</span>
+      </div>
+      <div class="total">총 합계: <%= item.formattedTotal %> 원</div>
+      <hr />
+      <% }) %>
+      <a href="/resource" class="btn-back">상품목록으로 돌아가기</a>
+    </div>
+  </body>
+</html>
