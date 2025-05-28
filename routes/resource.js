@@ -1,11 +1,10 @@
-// routes/resource.js
 const express = require("express");
 const sqlite3 = require("sqlite3").verbose();
 const path = require("path");
 
+const router = express.Router();
 const dbPath = path.join(__dirname, "../db/database.sqlite");
 const db = new sqlite3.Database(dbPath);
-const router = express.Router();
 
 // GET /resource - 상품 목록 페이지 렌더링
 router.get("/", (req, res) => {
