@@ -54,19 +54,6 @@ router.post("/create", (req, res) => {
   );
 });
 
-
-router.post('/create', (req, res) => {
-    const { author, title, content, parent_id } = req.body;
-    db.run(
-        'INSERT INTO posts (author, title, content, parent_id) VALUES (?, ?, ?, ?)',
-        [author, title, content, parent_id || null],
-        function (err) {
-            if (err) return res.send('등록 실패');
-            res.redirect('/board');
-        }
-    );
-});
-
 // 글 상세
 router.get("/view/:id", (req, res) => {
   const postId = req.params.id;

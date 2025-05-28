@@ -1,7 +1,7 @@
 <h2>답글 작성</h2>
 <p>📝 원글 제목: <strong><%= parentTitle %></strong></p>
 
-<form action="/create" method="POST">
+<form action="/board/create" method="POST">
   <!-- 부모 글 ID를 숨겨서 서버에 전달 -->
   <input type="hidden" name="parent_id" value="<%= parentId %>" />
 

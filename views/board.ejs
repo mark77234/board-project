@@ -55,17 +55,19 @@
       테무찬
     </a>
   </header>
-  <h2 class="board-title">고객센터 게시판</h2>
+  <h2>고객센터 게시판</h2>
   <a href="/board/new">[글쓰기]</a>
-  <ul class="post-list">
+  <ul>
     <% posts.forEach(post => { %>
-    <li class="post-item <%= post.parent_id ? 'reply' : '' %>">
+    <li class="<%= post.parent_id ? 'child-post' : 'parent-post' %>">
       <a href="/board/view/<%= post.id %>">
-        <%= post.parent_id ? '[답글]' : '글 수정' %> <%= post.title %> - <%=
+        <%= post.parent_id ? '[답글]' : '' %> <%= post.title %> - <%=
         post.author %>
       </a>
-      (<a href="/board/edit/<%= post.id %>">수정</a> /
-      <a href="/board/delete/<%= post.id %>">삭제</a>)
+      (
+      <a href="/board/edit/<%= post.id %>">수정</a> /
+      <a href="/board/delete/<%= post.id %>">삭제</a>
+      )
     </li>
     <% }) %>
   </ul>
