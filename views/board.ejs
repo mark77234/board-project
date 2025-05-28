@@ -39,6 +39,16 @@
   .post-item a:hover {
     text-decoration: underline;
   }
+
+  .write-button {
+    font-weight: bold;
+    text-decoration: none;
+    color: #2e7d32;
+  }
+
+  .write-button:hover {
+    text-decoration: underline;
+  }
 </style>
 <div class="board-container">
   <header style="text-align: center; margin-bottom: 20px">
@@ -55,19 +65,25 @@
       테무찬
     </a>
   </header>
-  <h2>고객센터 게시판</h2>
-  <a href="/board/new">[글쓰기]</a>
-  <ul>
+  <h2 class="board-title">고객센터 게시판</h2>
+  <div style="text-align: right; margin-bottom: 10px">
+    <a href="/board/new" class="write-button">[글쓰기]</a>
+  </div>
+  <ul class="post-list">
     <% posts.forEach(post => { %>
-    <li class="<%= post.parent_id ? 'child-post' : 'parent-post' %>">
-      <a href="/board/view/<%= post.id %>">
-        <%= post.parent_id ? '[답글]' : '' %> <%= post.title %> - <%=
-        post.author %>
-      </a>
-      (
-      <a href="/board/edit/<%= post.id %>">수정</a> /
-      <a href="/board/delete/<%= post.id %>">삭제</a>
-      )
+    <li class="post-item <%= post.parent_id ? 'reply' : '' %>">
+      <div>
+        <a href="/board/view/<%= post.id %>">
+          <strong
+            ><%= post.parent_id ? '[답글]' : '' %> <%= post.title %></strong
+          >
+        </a>
+        <span style="color: #888; margin-left: 8px">- <%= post.author %></span>
+      </div>
+      <div style="margin-top: 5px; font-size: 0.9rem">
+        <a href="/board/edit/<%= post.id %>" style="margin-right: 8px">수정</a>
+        <a href="/board/delete/<%= post.id %>">삭제</a>
+      </div>
     </li>
     <% }) %>
   </ul>
