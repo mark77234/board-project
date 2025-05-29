@@ -20,28 +20,41 @@ router.post("/register", async (req, res) => {
   const agree_email = req.body.agree_email ? 1 : 0;
   const hashedPassword = await bcrypt.hash(password, 10);
 
-  db.run(
-    "INSERT INTO users (username, password, name, gender, address, phone, email, agree_privacy, agree_sms, agree_email) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-    [
-      username,
-      hashedPassword,
-      name,
-      gender,
-      address,
-      phone,
-      email,
-      agree_privacy,
-      agree_sms,
-      agree_email,
-    ],
-    (err) => {
-      if (err) {
-        console.error(err.message);
-        return res.send("회원가입 실패");
-      }
-      res.redirect("/user/login");
+  // 아이디 중복 확인
+  db.get("SELECT * FROM users WHERE username = ?", [username], (err, row) => {
+    if (err) {
+      console.error(err.message);
+      return res.send("회원가입 중 오류가 발생했습니다.");
     }
-  );
+
+    if (row) {
+      return res.send("이미 존재하는 아이디입니다.");
+    }
+
+    // 중복 없으면 회원가입 진행
+    db.run(
+      "INSERT INTO users (username, password, name, gender, address, phone, email, agree_privacy, agree_sms, agree_email) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+      [
+        username,
+        hashedPassword,
+        name,
+        gender,
+        address,
+        phone,
+        email,
+        agree_privacy,
+        agree_sms,
+        agree_email,
+      ],
+      (err) => {
+        if (err) {
+          console.error(err.message);
+          return res.send("회원가입 중 오류가 발생했습니다.");
+        }
+        res.redirect("/user/login");
+      }
+    );
+  });
 });
 
 // 로그인 페이지
