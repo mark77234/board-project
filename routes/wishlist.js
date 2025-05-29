@@ -36,7 +36,7 @@ router.post("/add/:id", (req, res) => {
       req.session.wishlist.push(row);
     }
 
-    res.redirect("/resource");
+    res.redirect("/product");
   });
 });
 

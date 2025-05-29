@@ -43,7 +43,7 @@ router.post("/update", (req, res) => {
         console.error(err);
         return res.send("사용자 정보 수정에 실패했습니다.");
       }
-      res.redirect("/resource");
+      res.redirect("/product");
     }
   );
 });

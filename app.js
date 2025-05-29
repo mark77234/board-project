@@ -39,7 +39,7 @@ app.use("/user", userRouter);
 const boardRouter = require("./routes/board");
 app.use("/board", boardRouter);
 
-app.use("/resource", require("./routes/resource"));
+app.use("/product", require("./routes/product"));
 
 const cartRouter = require("./routes/cart");
 app.use("/cart", cartRouter);
