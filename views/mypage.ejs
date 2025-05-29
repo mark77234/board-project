@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>마이페이지</title>
+</head>
+  <link rel="stylesheet" href="/stylesheets/style.css">
+  <style>
+    body {
+      font-family: 'Noto Sans KR', sans-serif;
+      background-color: #f9f9f9;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 30px;
+    }
+
+    .mypage-container {
+      max-width: 600px;
+      margin: 0 auto;
+      background-color: #ffffff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: #444;
+    }
+
+    input.form-control,
+    select.form-control {
+      width: 100%;
+      padding: 10px 14px;
+      font-size: 15px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      transition: border-color 0.2s;
+    }
+
+    input.form-control:focus,
+    select.form-control:focus {
+      border-color: #007bff;
+      outline: none;
+    }
+
+    .btn-primary {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      background-color: #007bff;
+      border: none;
+      color: white;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    .btn-primary:hover {
+      background-color: #0056b3;
+    }
+
+    @media (max-width: 640px) {
+      .mypage-container {
+        padding: 20px;
+      }
+
+      input.form-control,
+      select.form-control {
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div style="position: fixed; top: 20px; left: 20px; z-index: 1000;">
+    <a href="/resource" class="btn btn-secondary" style="text-decoration: none; padding: 10px 20px; background-color: #6c757d; color: white; border-radius: 6px;">← 상품목록</a>
+  </div>
+  <h1>내 정보</h1>
+  <div class="mypage-container">
+    <% if (user) { %>
+    <form action="/mypage/update" method="POST">
+      <div class="form-group">
+        <label for="name">이름</label>
+        <input type="text" id="name" name="name" class="form-control" value="<%= user.name %>" required>
+      </div>
+
+      <div class="form-group">
+        <label for="email">이메일</label>
+        <input type="email" id="email" name="email" class="form-control" value="<%= user.email %>" readonly>
+      </div>
+
+      <div class="form-group">
+        <label for="phone">전화번호</label>
+        <input type="text" id="phone" name="phone" class="form-control" value="<%= user.phone %>">
+      </div>
+
+      <div class="form-group">
+        <label for="address">주소</label>
+        <input type="text" id="address" name="address" class="form-control" value="<%= user.address %>">
+      </div>
+
+      <% if (user.birth) { %>
+      <div class="form-group">
+        <label for="birth">생년월일</label>
+        <input type="date" id="birth" name="birth" class="form-control" value="<%= user.birth ? user.birth.substring(0, 10) : '' %>">
+      </div>
+      <% } %>
+
+      <div class="form-group">
+        <label for="gender">성별</label>
+        <div style="display: flex; gap: 20px; align-items: center;">
+          <label style="display: flex; align-items: center; gap: 6px;">
+            <input type="radio" name="gender" value="male" <%= user.gender === 'male' ? 'checked' : '' %> > 남성
+          </label>
+          <label style="display: flex; align-items: center; gap: 6px;">
+            <input type="radio" name="gender" value="female" <%= user.gender === 'female' ? 'checked' : '' %> > 여성
+          </label>
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-primary">정보 수정</button>
+    </form>
+    <% } else { %>
+      <p>사용자 정보를 불러올 수 없습니다.</p>
+    <% } %>
+  </div>
+</body>
+</html>
