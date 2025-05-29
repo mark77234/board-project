@@ -51,26 +51,15 @@
   }
 </style>
 <div class="board-container">
-  <header style="text-align: center; margin-bottom: 20px">
-    <a
-      href="/"
-      style="
-        text-decoration: none;
-        color: #d32f2f;
-        font-size: 2.5rem;
-        font-weight: 700;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      "
-    >
-      테무찬
-    </a>
-  </header>
+  <!-- header with home button removed -->
   <h2 class="board-title">고객센터 게시판</h2>
   <div style="text-align: right; margin-bottom: 10px">
     <a href="/board/new" class="write-button">[글쓰기]</a>
   </div>
+  <% const filteredPosts = posts.filter(post =>
+  !post.title.startsWith('[공지]')); %>
   <ul class="post-list">
-    <% posts.forEach(post => { %>
+    <% filteredPosts.forEach(post => { %>
     <li class="post-item <%= post.parent_id ? 'reply' : '' %>">
       <div>
         <a href="/board/view/<%= post.id %>">
@@ -87,4 +76,23 @@
     </li>
     <% }) %>
   </ul>
+  <div style="text-align: center; margin-top: 30px">
+    <a
+      href="/"
+      style="
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: white;
+        text-decoration: none;
+        border-radius: 6px;
+        font-weight: 600;
+        transition: background-color 0.3s ease;
+      "
+      onmouseover="this.style.backgroundColor='#0056b8'"
+      onmouseout="this.style.backgroundColor='#007bff'"
+    >
+      홈으로 돌아가기
+    </a>
+  </div>
 </div>

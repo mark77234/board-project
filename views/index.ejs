@@ -23,6 +23,7 @@
         padding: 40px 60px;
         border-radius: 10px;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        margin-top: 80px;
       }
 
       h1 {
@@ -30,7 +31,7 @@
         color: #333;
       }
 
-      a.button {
+      a.button.main {
         display: inline-block;
         padding: 12px 32px;
         background-color: #ff3f3f;
@@ -42,20 +43,46 @@
         transition: background-color 0.3s ease;
       }
 
-      a.button:hover {
+      a.button.main:hover {
         background-color: #e63232;
       }
 
-      a.button + a.button {
-        margin-left: 20px;
+      .top-nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background-color: #ffffff;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        padding: 10px 20px;
+        display: flex;
+        justify-content: center;
+        gap: 12px;
+        z-index: 1000;
+      }
+      .top-nav a {
+        padding: 8px 16px;
+        background-color: #ff9800;
+        color: #fff;
+        font-weight: 500;
+        text-decoration: none;
+        border-radius: 6px;
+        font-size: 14px;
+        transition: background-color 0.3s ease;
+      }
+      .top-nav a:hover {
+        background-color: #fb8c00;
       }
     </style>
   </head>
   <body>
+    <div class="top-nav">
+      <a href="/board">고객센터</a>
+      <a href="/notice">공지사항</a>
+    </div>
     <div class="container">
       <h1>테무찬</h1>
-      <a href="/user/login" class="button">로그인하기</a>
-      <a href="/board" class="button">고객센터</a>
+      <a href="/user/login" class="button main">상품</a>
     </div>
   </body>
 </html>

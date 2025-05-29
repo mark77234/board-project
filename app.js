@@ -50,6 +50,9 @@ app.use("/wishlist", wishlistRouter);
 const mypageRouter = require("./routes/mypage");
 app.use("/mypage", mypageRouter);
 
+const noticeRouter = require("./routes/notice");
+app.use("/notice", noticeRouter);
+
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));

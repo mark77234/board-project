@@ -47,8 +47,8 @@
 
 <div class="detail-container">
   <div style="margin-bottom: 25px">
-    <a
-      href="/board"
+    <button
+      onclick="history.back()"
       style="
         display: inline-block;
         background-color: #f0f4ff;
@@ -56,12 +56,15 @@
         padding: 8px 16px;
         border-radius: 6px;
         font-weight: 500;
-        text-decoration: none;
+        border: none;
+        cursor: pointer;
         transition: background-color 0.3s ease;
       "
+      onmouseover="this.style.backgroundColor='#dce4ff'"
+      onmouseout="this.style.backgroundColor='#f0f4ff'"
     >
       ← 돌아가기
-    </a>
+    </button>
   </div>
   <h2><%= post.title %></h2>
   <p><%= post.content %></p>
