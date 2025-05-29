@@ -149,6 +149,27 @@
         <a href="/cart/add/<%= product.id %>" class="btn-add-cart"
           >장바구니에 담기</a
         >
+        <form
+          method="POST"
+          action="/wishlist/add/<%= product.id %>"
+          style="margin-top: 10px"
+          onsubmit="alert('상품이 추가되었습니다');"
+        >
+          <button
+            type="submit"
+            class="btn-add-cart"
+            style="
+              background-color: #fff;
+              color: #d32f2f;
+              border: 1px solid #d32f2f;
+              display: block;
+              width: 100%;
+              margin-top: 8px;
+            "
+          >
+            위시리스트에 추가
+          </button>
+        </form>
       </div>
       <% }) %>
     </div>

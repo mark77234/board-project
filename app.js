@@ -44,6 +44,9 @@ app.use("/resource", require("./routes/resource"));
 const cartRouter = require("./routes/cart");
 app.use("/cart", cartRouter);
 
+const wishlistRouter = require("./routes/wishlist");
+app.use("/wishlist", wishlistRouter);
+
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));

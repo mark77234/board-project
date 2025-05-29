@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>위시리스트 - 테무찬</title>
+    <style>
+      /* 기본 body 스타일 */
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #fff8f8;
+        color: #333;
+        margin: 40px auto;
+        max-width: 960px;
+        padding: 0 20px;
+      }
+
+      h1 {
+        text-align: center;
+        color: #d32f2f;
+        margin-bottom: 40px;
+        font-weight: 700;
+        font-size: 2.4rem;
+        letter-spacing: 1.2px;
+        text-shadow: 0 1px 3px rgba(211, 47, 47, 0.6);
+      }
+
+      .wishlist-container {
+        width: 100%;
+      }
+
+      /* 빈 위시리스트 메시지 */
+      .empty-msg {
+        text-align: center;
+        font-size: 1.4rem;
+        color: #b33a3a;
+        margin-top: 80px;
+        font-weight: 600;
+        font-style: italic;
+      }
+
+      /* 상품 카드 그리드 */
+      .product-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+        gap: 24px;
+      }
+
+      /* 카드 */
+      .product-card {
+        background: #fff;
+        border-radius: 14px;
+        box-shadow: 0 6px 16px rgba(211, 47, 47, 0.1);
+        padding: 24px 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        transition: box-shadow 0.4s ease, transform 0.3s ease;
+      }
+
+      .product-card:hover {
+        box-shadow: 0 12px 28px rgba(211, 47, 47, 0.3);
+        transform: translateY(-4px);
+      }
+
+      /* 상품명 */
+      .product-name {
+        font-weight: 700;
+        font-size: 1.2rem;
+        margin-bottom: 12px;
+        text-align: center;
+        color: #d32f2f;
+        min-height: 56px;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+
+      /* 가격 */
+      .product-price {
+        font-weight: 800;
+        color: #6b0000;
+        margin-bottom: 20px;
+        font-size: 1.1rem;
+      }
+
+      /* 삭제 버튼 */
+      .remove-btn {
+        background-color: #d32f2f;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        padding: 10px 16px;
+        cursor: pointer;
+        font-weight: 700;
+        font-size: 1rem;
+        width: 100%;
+        transition: background-color 0.35s ease;
+        box-shadow: 0 4px 10px rgba(211, 47, 47, 0.3);
+      }
+      .remove-btn:hover {
+        background-color: #a91f1f;
+        box-shadow: 0 6px 16px rgba(169, 31, 31, 0.5);
+      }
+
+      /* 뒤로가기 버튼 */
+      .back-btn {
+        background-color: #777;
+        color: white;
+        border: none;
+        border-radius: 10px;
+        padding: 14px 26px;
+        cursor: pointer;
+        font-weight: 700;
+        font-size: 1.1rem;
+        transition: background-color 0.35s ease;
+        display: block;
+        width: 260px;
+        margin: 50px auto 0;
+        text-align: center;
+        text-decoration: none;
+        box-shadow: 0 4px 10px rgba(119, 119, 119, 0.4);
+      }
+      .back-btn:hover {
+        background-color: #555;
+        box-shadow: 0 6px 16px rgba(85, 85, 85, 0.6);
+      }
+
+      /* 반응형 글꼴 조정 (작은 화면용) */
+      @media (max-width: 600px) {
+        h1 {
+          font-size: 1.8rem;
+        }
+        .product-card {
+          padding: 16px 12px;
+        }
+        .remove-btn {
+          font-size: 0.9rem;
+          padding: 8px 12px;
+        }
+        .back-btn {
+          width: 100%;
+          font-size: 1rem;
+          padding: 12px 16px;
+          margin: 40px 0 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <h1>내 위시리스트</h1>
+    <div class="wishlist-container">
+      <% if (!wishlist || wishlist.length === 0) { %>
+      <p class="empty-msg">아직 위시리스트에 담긴 상품이 없습니다.</p>
+      <% } else { %>
+      <div class="product-grid">
+        <% wishlist.forEach(function(product) { %>
+        <div class="product-card">
+          <div class="product-name"><%= product.name %></div>
+          <div class="product-price">
+            <%= product.price.toLocaleString() %>원
+          </div>
+          <form method="POST" action="/wishlist/remove/<%= product.id %>">
+            <button type="submit" class="remove-btn">삭제</button>
+          </form>
+        </div>
+        <% }) %>
+      </div>
+      <% } %>
+    </div>
+    <a href="/resource" class="back-btn">상품 목록으로 돌아가기</a>
+  </body>
+</html>
