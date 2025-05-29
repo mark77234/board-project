@@ -75,42 +75,68 @@
     </style>
   </head>
   <body>
-    <header style="text-align: center; margin-bottom: 20px">
+    <header
+      style="
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+        padding: 0 20px;
+        background-color: #fff;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        height: 60px;
+      "
+    >
       <a
         href="/"
         style="
           text-decoration: none;
           color: #d32f2f;
-          font-size: 2.5rem;
+          font-size: 2rem;
           font-weight: 700;
           font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         "
       >
         테무찬
       </a>
+
+      <nav style="display: flex; gap: 25px; align-items: center">
+        <a
+          href="/mypage"
+          style="
+            color: #d32f2f;
+            font-weight: 600;
+            text-decoration: none;
+            font-size: 1rem;
+            line-height: 1;
+          "
+          >마이페이지</a
+        >
+        <a
+          href="/wishlist"
+          style="
+            color: #d32f2f;
+            font-weight: 600;
+            text-decoration: none;
+            font-size: 1rem;
+            line-height: 1;
+          "
+          >위시리스트</a
+        >
+        <a
+          href="/cart"
+          style="
+            color: #d32f2f;
+            font-weight: 600;
+            text-decoration: none;
+            font-size: 1rem;
+            line-height: 1;
+          "
+          >장바구니</a
+        >
+      </nav>
     </header>
-    <a
-      href="/cart"
-      title="장바구니"
-      style="
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        background-color: #d32f2f;
-        color: white;
-        padding: 8px 16px;
-        border-radius: 20px;
-        font-size: 0.95rem;
-        font-weight: 600;
-        text-decoration: none;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-        transition: background-color 0.3s ease;
-      "
-      onmouseover="this.style.backgroundColor='#b71c1c'"
-      onmouseout="this.style.backgroundColor='#d32f2f'"
-    >
-      장바구니
-    </a>
     <h1>상품 목록</h1>
     <% if (products && products.length > 0) { %>
     <div class="grid">
