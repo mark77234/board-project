@@ -14,12 +14,26 @@ router.get("/register", (req, res) => {
 
 // 회원가입 처리
 router.post("/register", async (req, res) => {
-  const { username, password, name } = req.body;
+  const { username, password, name, gender, address, phone, email } = req.body;
+  const agree_privacy = req.body.agree_privacy ? 1 : 0;
+  const agree_sms = req.body.agree_sms ? 1 : 0;
+  const agree_email = req.body.agree_email ? 1 : 0;
   const hashedPassword = await bcrypt.hash(password, 10);
 
   db.run(
-    "INSERT INTO users (username, password, name) VALUES (?, ?, ?)",
-    [username, hashedPassword, name],
+    "INSERT INTO users (username, password, name, gender, address, phone, email, agree_privacy, agree_sms, agree_email) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+    [
+      username,
+      hashedPassword,
+      name,
+      gender,
+      address,
+      phone,
+      email,
+      agree_privacy,
+      agree_sms,
+      agree_email,
+    ],
     (err) => {
       if (err) {
         console.error(err.message);
