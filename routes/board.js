@@ -102,7 +102,7 @@ router.get("/view/:id", (req, res) => {
       (fileErr, files) => {
         if (fileErr) return res.send("파일 불러오기 실패");
 
-        res.render("detail", { post, files });
+        res.render("detail", { post, files: files || [] });
       }
     );
   });
