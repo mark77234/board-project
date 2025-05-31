@@ -58,6 +58,7 @@
   <form
     action="<%= post ? '/board/edit/' + post.id : '/board/new' %>"
     method="post"
+    enctype="multipart/form-data"
   >
     <input
       type="hidden"
@@ -74,6 +75,14 @@
     <textarea name="content" placeholder="내용" rows="10" required>
 <%= post?.content || '' %></textarea
     >
+
+    <label
+      for="file-upload"
+      style="display: block; margin-bottom: 10px; font-weight: 600"
+      >첨부파일 선택</label
+    >
+    <input type="file" id="file-upload" name="files" multiple />
+
     <button type="submit">저장</button>
   </form>
 </div>

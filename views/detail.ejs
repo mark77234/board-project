@@ -71,5 +71,17 @@
   <p class="meta-info">
     작성자: <%= post.author %> | 작성일: <%= post.created_at %>
   </p>
+  <% if (files && files.length > 0) { %>
+  <div style="margin-bottom: 20px">
+    <h3>첨부 파일</h3>
+    <ul>
+      <% files.forEach(file => { %>
+      <li>
+        <a href="/<%= file.filepath %>" download><%= file.filename %></a>
+      </li>
+      <% }) %>
+    </ul>
+  </div>
+  <% } %>
   <a href="/board/reply/<%= post.id %>" class="reply-link">답글 작성</a>
 </div>
