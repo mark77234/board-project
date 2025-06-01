@@ -3,81 +3,355 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>로그인</title>
+    <title>로그인 | SHOP</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
     <style>
-      body {
+      * {
         margin: 0;
         padding: 0;
-        font-family: "Noto Sans KR", sans-serif;
+        box-sizing: border-box;
+        font-family: "Noto Sans KR", "맑은 고딕", sans-serif;
+      }
+
+      body {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
         display: flex;
         justify-content: center;
         align-items: center;
-        height: 100vh;
-        background: #f5f5f5;
+        min-height: 100vh;
+        padding: 20px;
       }
 
       .login-container {
+        width: 100%;
+        max-width: 420px;
         background: white;
-        padding: 40px;
-        border-radius: 10px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        text-align: center;
-        width: 320px;
+        border-radius: 16px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        overflow: hidden;
+        animation: fadeIn 0.5s ease-out;
       }
 
-      h2 {
-        margin-bottom: 24px;
-        color: #333;
+      .login-header {
+        background: #ff3f3f;
+        padding: 30px 20px;
+        text-align: center;
+        color: white;
+        position: relative;
+      }
+
+      .logo {
+        font-size: 32px;
+        font-weight: 800;
+        letter-spacing: -1px;
+        margin-bottom: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+      }
+
+      .logo i {
+        font-size: 28px;
+        background: white;
+        color: #ff3f3f;
+        width: 46px;
+        height: 46px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .login-header h1 {
+        font-size: 24px;
+        font-weight: 500;
+        letter-spacing: -0.5px;
+      }
+
+      .login-form {
+        padding: 30px;
+      }
+
+      .input-group {
+        position: relative;
+        margin-bottom: 20px;
+      }
+
+      .input-group i {
+        position: absolute;
+        left: 16px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #888;
+        font-size: 18px;
       }
 
       input {
         width: 100%;
-        padding: 12px;
-        margin-bottom: 16px;
-        border: 1px solid #ddd;
-        border-radius: 6px;
+        padding: 16px 16px 16px 48px;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
         font-size: 16px;
+        transition: all 0.3s ease;
+        outline: none;
+        background: #f9f9f9;
       }
 
-      button {
-        width: 100%;
-        padding: 12px;
-        background-color: #ff3f3f;
-        color: white;
-        font-size: 16px;
-        font-weight: bold;
-        border: none;
-        border-radius: 6px;
+      input:focus {
+        border-color: #ff3f3f;
+        box-shadow: 0 0 0 3px rgba(255, 63, 63, 0.1);
+        background: white;
+      }
+
+      input::placeholder {
+        color: #aaa;
+      }
+
+      .options {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 10px 0 25px;
+        font-size: 14px;
+      }
+
+      .remember {
+        display: flex;
+        align-items: center;
+      }
+
+      .remember input {
+        width: auto;
+        margin-right: 8px;
+      }
+
+      .remember label {
+        color: #555;
         cursor: pointer;
-        transition: background-color 0.3s ease;
       }
 
-      button:hover {
-        background-color: #e63232;
+      .find-password {
+        color: #666;
+        text-decoration: none;
+        transition: color 0.3s;
+      }
+
+      .find-password:hover {
+        color: #ff3f3f;
+        text-decoration: underline;
+      }
+
+      .login-button {
+        width: 100%;
+        padding: 16px;
+        background: linear-gradient(to right, #ff3f3f, #e63232);
+        color: white;
+        font-size: 17px;
+        font-weight: 600;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 12px rgba(255, 63, 63, 0.25);
+      }
+
+      .login-button:hover {
+        background: linear-gradient(to right, #e63232, #d12b2b);
+        box-shadow: 0 6px 15px rgba(255, 63, 63, 0.35);
+        transform: translateY(-2px);
+      }
+
+      .login-button:active {
+        transform: translateY(0);
+      }
+
+      .divider {
+        display: flex;
+        align-items: center;
+        margin: 28px 0;
+        color: #888;
+      }
+
+      .divider::before,
+      .divider::after {
+        content: "";
+        flex: 1;
+        border-bottom: 1px solid #e0e0e0;
+      }
+
+      .divider span {
+        padding: 0 15px;
+        font-size: 14px;
+      }
+
+      .social-login {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin-bottom: 25px;
+      }
+
+      .social-btn {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        border: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .social-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+      }
+
+      .kakao {
+        background: #fee500;
+        color: #3c1e1e;
+      }
+
+      .naver {
+        background: #03c75a;
+        color: white;
+      }
+
+      .google {
+        background: white;
+        color: #4285f4;
+        border: 1px solid #ddd;
+      }
+
+      .register-container {
+        text-align: center;
+        padding-top: 20px;
+        border-top: 1px solid #eee;
+        margin-top: 20px;
+      }
+
+      .register-container p {
+        color: #666;
+        margin-bottom: 15px;
+      }
+
+      .register-button {
+        display: inline-block;
+        padding: 14px 30px;
+        background: white;
+        color: #333;
+        font-size: 16px;
+        font-weight: 600;
+        border: 2px solid #ddd;
+        border-radius: 8px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+      }
+
+      .register-button:hover {
+        background: #f8f8f8;
+        border-color: #ff3f3f;
+        color: #ff3f3f;
+      }
+
+      .footer {
+        text-align: center;
+        padding: 20px;
+        color: #888;
+        font-size: 13px;
+        line-height: 1.6;
+      }
+
+      .footer a {
+        color: #666;
+        text-decoration: none;
+        margin: 0 5px;
+      }
+
+      .footer a:hover {
+        text-decoration: underline;
+        color: #ff3f3f;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @media (max-width: 480px) {
+        .login-container {
+          border-radius: 12px;
+        }
+
+        .login-header {
+          padding: 25px 15px;
+        }
+
+        .login-form {
+          padding: 25px 20px;
+        }
+
+        .social-login {
+          gap: 12px;
+        }
+
+        .social-btn {
+          width: 45px;
+          height: 45px;
+          font-size: 18px;
+        }
       }
     </style>
   </head>
   <body>
     <div class="login-container">
-      <h2>로그인</h2>
-      <form action="/user/login" method="post">
-        <input
-          type="text"
-          name="username"
-          placeholder="아이디"
-          required
-        /><br />
-        <input
-          type="password"
-          name="password"
-          placeholder="비밀번호"
-          required
-        /><br />
-        <button type="submit">로그인</button>
-        <p style="margin-top: 16px">
-          계정이 없으신가요? <a href="/user/register">회원가입</a>
-        </p>
+      <div class="login-header">
+        <div class="logo">
+          <i class="fas fa-shopping-bag"></i>
+          <span>테무찬</span>
+        </div>
+        <h1>로그인</h1>
+      </div>
+
+      <form class="login-form" action="/user/login" method="post">
+        <div class="input-group">
+          <i class="fas fa-user"></i>
+          <input type="text" name="username" placeholder="아이디" required />
+        </div>
+
+        <div class="input-group">
+          <i class="fas fa-lock"></i>
+          <input
+            type="password"
+            name="password"
+            placeholder="비밀번호"
+            required
+          />
+        </div>
+
+        <button type="submit" class="login-button">로그인</button>
       </form>
+      <div class="register-container">
+        <p>계정이 없으신가요?</p>
+        <a href="/user/register" class="register-button">회원가입</a>
+      </div>
+
+      <div class="footer">
+        <p>© 2025 테무찬. All Rights Reserved.</p>
+      </div>
     </div>
   </body>
 </html>
