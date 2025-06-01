@@ -2,201 +2,571 @@
 <html lang="ko">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>상품 목록</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>테무찬 - 상품 목록</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
     <style>
-      body {
-        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-        background: #f9f9f9;
+      * {
         margin: 0;
-        padding: 20px;
-        color: #333;
+        padding: 0;
+        box-sizing: border-box;
       }
-      h1 {
+
+      body {
+        font-family: "Segoe UI", "Apple SD Gothic Neo", "Malgun Gothic",
+          sans-serif;
+        background: linear-gradient(135deg, #f9f9f9 0%, #f0f2f5 100%);
+        color: #333;
+        line-height: 1.6;
+        min-height: 100vh;
+        padding-top: 120px;
+      }
+
+      /* 헤더 스타일 */
+      header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background: linear-gradient(135deg, #ffffff 0%, #f8f8f8 100%);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        padding: 15px 5%;
+        z-index: 1000;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        transition: all 0.3s ease;
+      }
+
+      .logo {
+        font-size: 2.4rem;
+        font-weight: 800;
+        background: linear-gradient(45deg, #d32f2f, #f44336);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        text-decoration: none;
+        letter-spacing: -1px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .logo i {
+        font-size: 1.8rem;
+      }
+
+      .search-container {
+        flex: 1;
+        max-width: 600px;
+        margin: 0 40px;
+        position: relative;
+      }
+
+      .search-container input {
+        width: 100%;
+        padding: 14px 20px 14px 50px;
+        border: 1px solid #e0e0e0;
+        border-radius: 50px;
+        font-size: 1rem;
+        background: #f5f5f5;
+        transition: all 0.3s ease;
+        box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+      }
+
+      .search-container input:focus {
+        outline: none;
+        background: #fff;
+        border-color: #d32f2f;
+        box-shadow: 0 0 0 3px rgba(211, 47, 47, 0.1);
+      }
+
+      .search-container i {
+        position: absolute;
+        left: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #888;
+        font-size: 1.2rem;
+      }
+
+      .nav-menu {
+        display: flex;
+        gap: 28px;
+      }
+
+      .nav-link {
+        color: #444;
+        font-weight: 600;
+        font-size: 1.05rem;
+        text-decoration: none;
+        position: relative;
+        padding: 5px 0;
+        transition: all 0.3s ease;
+      }
+
+      .nav-link:hover {
+        color: #d32f2f;
+      }
+
+      .nav-link::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: #d32f2f;
+        transition: width 0.3s ease;
+      }
+
+      .nav-link:hover::after {
+        width: 100%;
+      }
+
+      .header-icons {
+        display: flex;
+        gap: 28px;
+        margin-left: 20px;
+        align-items: center;
+      }
+
+      .icon-link {
+        font-size: 1.4rem;
+        color: #555;
+        transition: all 0.3s ease;
+        position: relative;
+      }
+
+      .icon-link:hover {
+        color: #d32f2f;
+        transform: translateY(-3px);
+      }
+
+      .icon-badge {
+        position: absolute;
+        top: -8px;
+        right: -8px;
+        background: #d32f2f;
+        color: white;
+        font-size: 0.7rem;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+      }
+
+      /* 제목 스타일 */
+      .page-title {
         text-align: center;
-        margin-bottom: 30px;
+        margin: 0 auto 40px;
+        max-width: 900px;
+        padding: 0 20px;
+      }
+
+      .page-title h1 {
+        font-size: 2.5rem;
         font-weight: 700;
         color: #222;
+        margin-bottom: 12px;
+        background: linear-gradient(45deg, #d32f2f, #b71c1c);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
       }
+
+      .page-title p {
+        color: #666;
+        font-size: 1.1rem;
+      }
+
+      /* 상품 그리드 스타일 */
+      .container {
+        max-width: 1300px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+
       .grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-        gap: 20px;
-        max-width: 1000px;
-        margin: 0 auto;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 28px;
       }
+
       .card {
         background: #fff;
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        padding: 20px;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.06);
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         display: flex;
         flex-direction: column;
-        justify-content: space-between;
-        transition: box-shadow 0.3s ease;
+        height: 100%;
+        position: relative;
       }
+
       .card:hover {
-        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12);
       }
-      .product-name {
-        font-size: 1.2rem;
+
+      .product-image {
+        height: 220px;
+        background: linear-gradient(45deg, #f5f5f5, #e0e0e0);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .product-image i {
+        font-size: 4rem;
+        color: #d1d1d1;
+      }
+
+      .product-tag {
+        position: absolute;
+        top: 15px;
+        left: 15px;
+        background: #ff5722;
+        color: white;
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 0.85rem;
         font-weight: 600;
+      }
+
+      .product-details {
+        padding: 22px;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .product-name {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: #222;
         margin-bottom: 10px;
-        color: #111;
+        line-height: 1.4;
       }
+
       .product-price {
-        font-size: 1rem;
-        margin-bottom: 20px;
-        color: #555;
+        font-size: 1.3rem;
+        font-weight: 800;
+        color: #d32f2f;
+        margin-bottom: 18px;
       }
+
+      .product-price span {
+        font-size: 0.9rem;
+        color: #777;
+        font-weight: 500;
+        text-decoration: line-through;
+        margin-right: 8px;
+      }
+
+      .product-rating {
+        display: flex;
+        align-items: center;
+        margin-bottom: 18px;
+      }
+
+      .product-rating i {
+        color: #ffc107;
+        font-size: 1rem;
+        margin-right: 2px;
+      }
+
+      .product-rating span {
+        color: #777;
+        font-size: 0.9rem;
+        margin-left: 8px;
+      }
+
+      .btn-group {
+        display: flex;
+        gap: 12px;
+        margin-top: auto;
+      }
+
       .btn-add-cart {
-        background-color: #d32f2f;
+        flex: 1;
+        background: linear-gradient(45deg, #d32f2f, #f44336);
         border: none;
         color: white;
-        padding: 10px 0;
-        border-radius: 5px;
+        padding: 14px;
+        border-radius: 10px;
         font-weight: 600;
         cursor: pointer;
         text-align: center;
         text-decoration: none;
-        display: block;
-        transition: background-color 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 10px rgba(211, 47, 47, 0.3);
       }
+
       .btn-add-cart:hover {
-        background-color: #b71c1c;
+        background: linear-gradient(45deg, #b71c1c, #d32f2f);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 15px rgba(211, 47, 47, 0.4);
       }
+
+      .btn-wishlist {
+        width: 50px;
+        height: 100%;
+        background: #f5f5f5;
+        border: 1px solid #e0e0e0;
+        border-radius: 10px;
+        color: #666;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .btn-wishlist:hover {
+        background: #fff5f5;
+        border-color: #ffcdd2;
+        color: #d32f2f;
+        transform: translateY(-2px);
+      }
+
       .no-products {
         text-align: center;
-        font-size: 1.2rem;
-        color: #777;
-        margin-top: 50px;
+        padding: 80px 20px;
+        grid-column: 1 / -1;
+      }
+
+      .no-products i {
+        font-size: 4rem;
+        color: #e0e0e0;
+        margin-bottom: 20px;
+      }
+
+      .no-products h2 {
+        font-size: 1.8rem;
+        color: #666;
+        margin-bottom: 15px;
+      }
+
+      .no-products p {
+        color: #999;
+        max-width: 500px;
+        margin: 0 auto;
+      }
+
+      /* 반응형 디자인 */
+      @media (max-width: 1100px) {
+        .search-container {
+          max-width: 400px;
+        }
+
+        .grid {
+          grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        }
+      }
+
+      @media (max-width: 900px) {
+        header {
+          flex-wrap: wrap;
+          padding: 15px;
+        }
+
+        .logo {
+          order: 1;
+          font-size: 2rem;
+        }
+
+        .search-container {
+          order: 3;
+          margin: 15px 0 0;
+          max-width: 100%;
+        }
+
+        .nav-menu {
+          order: 2;
+          gap: 20px;
+        }
+
+        .header-icons {
+          order: 4;
+          margin-left: auto;
+        }
+      }
+
+      @media (max-width: 600px) {
+        body {
+          padding-top: 150px;
+        }
+
+        .nav-menu {
+          display: none;
+        }
+
+        .header-icons {
+          gap: 18px;
+        }
+
+        .grid {
+          grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
+          gap: 20px;
+        }
+
+        .product-image {
+          height: 180px;
+        }
+
+        .page-title h1 {
+          font-size: 2rem;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .logo span {
+          display: none;
+        }
+
+        .logo i {
+          font-size: 2rem;
+        }
+
+        .header-icons {
+          gap: 15px;
+        }
+
+        .icon-link {
+          font-size: 1.3rem;
+        }
       }
     </style>
   </head>
   <body>
-    <header
-      style="
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 30px;
-        padding: 0 20px;
-        background-color: #fff;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-        border-radius: 8px;
-        height: 60px;
-      "
-    >
-      <a
-        href="/"
-        style="
-          text-decoration: none;
-          color: #d32f2f;
-          font-size: 2rem;
-          font-weight: 700;
-          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        "
-      >
-        테무찬
+    <header>
+      <a href="/" class="logo">
+        <i class="fas fa-shopping-bag"></i>
+        <span>테무찬</span>
       </a>
 
-      <nav style="display: flex; gap: 25px; align-items: center">
-        <a
-          href="/mypage"
-          style="
-            color: #d32f2f;
-            font-weight: 600;
-            text-decoration: none;
-            font-size: 1rem;
-            line-height: 1;
-          "
-          >마이페이지</a
-        >
-        <a
-          href="/wishlist"
-          style="
-            color: #d32f2f;
-            font-weight: 600;
-            text-decoration: none;
-            font-size: 1rem;
-            line-height: 1;
-          "
-          >위시리스트</a
-        >
-        <a
-          href="/cart"
-          style="
-            color: #d32f2f;
-            font-weight: 600;
-            text-decoration: none;
-            font-size: 1rem;
-            line-height: 1;
-          "
-          >장바구니</a
-        >
-        <a
-          href="/board"
-          style="
-            color: #d32f2f;
-            font-weight: 600;
-            text-decoration: none;
-            font-size: 1rem;
-            line-height: 1;
-          "
-          >고객센터</a
-        >
-        <a
-          href="/notice"
-          style="
-            color: #d32f2f;
-            font-weight: 600;
-            text-decoration: none;
-            font-size: 1rem;
-            line-height: 1;
-          "
-          >공지사항</a
-        >
-      </nav>
-    </header>
-    <h1>상품 목록</h1>
-    <% if (products && products.length > 0) { %>
-    <div class="grid">
-      <% products.forEach(function(product) { %>
-      <div class="card">
-        <div class="product-name"><%= product.name %></div>
-        <div class="product-price">
-          <%= product.price.toLocaleString() %> 원
-        </div>
-        <a href="/cart/add/<%= product.id %>" class="btn-add-cart"
-          >장바구니에 담기</a
-        >
-        <form
-          method="POST"
-          action="/wishlist/add/<%= product.id %>"
-          style="margin-top: 10px"
-          onsubmit="alert('상품이 추가되었습니다');"
-        >
-          <button
-            type="submit"
-            class="btn-add-cart"
-            style="
-              background-color: #fff;
-              color: #d32f2f;
-              border: 1px solid #d32f2f;
-              display: block;
-              width: 100%;
-              margin-top: 8px;
-            "
-          >
-            위시리스트에 추가
-          </button>
-        </form>
+      <div class="header-icons">
+        <nav class="nav-menu">
+          <a href="/board" class="nav-link">고객센터</a>
+          <a href="/notice" class="nav-link">공지사항</a>
+        </nav>
+        <a href="/wishlist" class="icon-link">
+          <i class="far fa-heart"></i>
+        </a>
+        <a href="/cart" class="icon-link">
+          <i class="fas fa-shopping-cart"></i>
+        </a>
+        <a href="/mypage" class="icon-link">
+          <i class="far fa-user"></i>
+        </a>
       </div>
-      <% }) %>
+    </header>
+
+    <div class="container">
+      <div class="page-title">
+        <h1>상품 목록</h1>
+        <p>다양한 상품 중에서 마음에 드는 상품을 찾아보세요</p>
+      </div>
+
+      <% if (products && products.length > 0) { %>
+      <div class="grid">
+        <% products.forEach(function(product) { %>
+        <div class="card">
+          <div class="product-image">
+            <div class="product-tag">BEST</div>
+            <i class="fas fa-shopping-cart"></i>
+          </div>
+          <div class="product-details">
+            <div class="product-name"><%= product.name %></div>
+            <div class="product-price">
+              <span><%= (product.price * 1.2).toLocaleString() %> 원</span>
+              <%= product.price.toLocaleString() %> 원
+            </div>
+            <div class="product-rating">
+              <div>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star-half-alt"></i>
+              </div>
+              <span>(3)</span>
+            </div>
+            <div class="btn-group">
+              <a href="/cart/add/<%= product.id %>" class="btn-add-cart">
+                <i class="fas fa-cart-plus"></i>
+                장바구니 담기
+              </a>
+              <form
+                method="POST"
+                action="/wishlist/add/<%= product.id %>"
+                onsubmit="alert('상품이 추가되었습니다');"
+              >
+                <button type="submit" class="btn-wishlist">
+                  <i class="far fa-heart"></i>
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+        <% }) %>
+      </div>
+      <% } else { %>
+      <div class="no-products">
+        <i class="fas fa-box-open"></i>
+        <h2>등록된 상품이 없습니다</h2>
+        <p>새로운 상품이 곧 등록될 예정입니다. 조금만 기다려 주세요.</p>
+      </div>
+      <% } %>
     </div>
-    <% } else { %>
-    <div class="no-products">상품이 없습니다.</div>
-    <% } %>
+
+    <script>
+      // 스크롤 시 헤더 효과
+      window.addEventListener("scroll", function () {
+        const header = document.querySelector("header");
+        if (window.scrollY > 50) {
+          header.style.padding = "10px 5%";
+          header.style.boxShadow = "0 4px 15px rgba(0, 0, 0, 0.1)";
+        } else {
+          header.style.padding = "15px 5%";
+          header.style.boxShadow = "0 4px 20px rgba(0, 0, 0, 0.08)";
+        }
+      });
+
+      // 위시리스트 버튼 토글 효과
+      document.querySelectorAll(".btn-wishlist").forEach((button) => {
+        button.addEventListener("click", function () {
+          const icon = this.querySelector("i");
+          if (icon.classList.contains("far")) {
+            icon.classList.remove("far");
+            icon.classList.add("fas", "animate__animated", "animate__pulse");
+            this.style.color = "#d32f2f";
+
+            // 애니메이션 종료 후 클래스 제거
+            setTimeout(() => {
+              icon.classList.remove("animate__animated", "animate__pulse");
+            }, 500);
+          } else {
+            icon.classList.remove("fas");
+            icon.classList.add("far");
+            this.style.color = "#666";
+          }
+        });
+      });
+    </script>
   </body>
 </html>
