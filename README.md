@@ -12,10 +12,6 @@
 <img src="https://github.com/user-attachments/assets/d72b796c-463f-486e-a191-bef8979c6547" width=30%>
 <img src="https://github.com/user-attachments/assets/17871b94-c537-467a-ab7f-32dd17575d2a" width=35%>
 
-### DB - users
-
-<img src="https://github.com/user-attachments/assets/68cad1dc-7dd0-4348-8f75-fa52906b7808" width=50%>
-
 ## 상품 페이지(리소스 페이지)
 
 <img src="https://github.com/user-attachments/assets/ae3c9703-a018-439c-a098-a65849b478fd" width=50%>
@@ -27,6 +23,8 @@
 | 👤     | 마이페이지 | `/mypage` |
 | 🛒     | 장바구니 | `/cart` |
 | ❤️     | 위시리스트 | `/wishlist` |
+| 공지사항    | 공지사항 | `/notice` |
+| 고객센터    | 고객센터 | `/board` |
 
 ### 장바구니
 
@@ -46,7 +44,6 @@
 <img src="https://github.com/user-attachments/assets/db1df9ec-1bb6-441c-8b5a-04bc8683bcbf" width=50%>
 
 ### 고객센터
-
 
 <img src="https://github.com/user-attachments/assets/fe479d2e-3786-47de-ba86-d36d25ca7129" width=50%>
 
