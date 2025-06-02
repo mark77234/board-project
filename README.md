@@ -1,7 +1,7 @@
 # 테무찬 - 쇼핑몰 웹
 
 ## 홈 페이지
-<img src="https://github.com/user-attachments/assets/6ba0cdc2-9000-4e05-8b2a-1ec6c830effb" width=50%>
+<img src="https://github.com/user-attachments/assets/da3362e3-0709-4190-92e8-4584c86f260e" width=50%>
 
 ## 로그인
 <img src="https://github.com/user-attachments/assets/6bdce580-6d10-4cc0-86ff-cb76f0094957" width=50%>
