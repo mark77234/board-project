@@ -98,20 +98,22 @@
         align-items: center;
       }
 
-      .header-login {
-        padding: 10px 24px;
-        background-color: var(--primary);
-        color: var(--white);
+      .header-link {
+        padding: 10px 18px;
+        background-color: transparent;
+        color: var(--dark);
         text-decoration: none;
         font-size: 16px;
         border-radius: 8px;
-        font-weight: 600;
-        transition: background-color 0.3s ease;
-        display: inline-block;
+        font-weight: 500;
+        transition: background-color 0.3s ease, color 0.3s ease;
+        border: 1px solid var(--border);
       }
 
-      .header-login:hover {
-        background-color: var(--primary-dark);
+      .header-link:hover {
+        background-color: var(--light);
+        color: var(--primary);
+        border-color: var(--primary);
       }
 
       .header-icons {
@@ -602,7 +604,8 @@
       </a>
 
       <div class="header-actions">
-        <a href="/user/login" class="header-login">로그인</a>
+        <a href="/board" class="header-link">고객센터</a>
+        <a href="/notice" class="header-link">공지사항</a>
       </div>
     </header>
 
