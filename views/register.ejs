@@ -8,301 +8,103 @@
       href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap"
       rel="stylesheet"
     />
-    <style>
-      * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-      }
-
-      input[type="radio"] {
-        display: none;
-      }
-      input[type="checkbox"] {
-        display: none;
-      }
-
-      body {
-        font-family: "Noto Sans KR", sans-serif;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        min-height: 100vh;
-        background: linear-gradient(135deg, #f5f7fa 0%, #e4e7f1 100%);
-        padding: 20px;
-      }
-
-      .register-container {
-        background: white;
-        padding: 40px;
-        border-radius: 16px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-        text-align: center;
-        width: 100%;
-        max-width: 440px;
-        transition: transform 0.3s ease;
-      }
-
-      .register-container:hover {
-        transform: translateY(-5px);
-      }
-
-      h2 {
-        margin-bottom: 32px;
-        color: #2c3e50;
-        font-weight: 700;
-        font-size: 28px;
-      }
-
-      form {
-        display: flex;
-        flex-direction: column;
-        align-items: stretch;
-      }
-
-      .input-group {
-        position: relative;
-        margin-bottom: 22px;
-      }
-
-      input[type="text"],
-      input[type="email"],
-      input[type="password"] {
-        width: 100%;
-        padding: 16px 18px;
-        border: 1px solid #e0e0e0;
-        border-radius: 10px;
-        font-size: 16px;
-        background-color: #fafafa;
-        transition: all 0.3s ease;
-      }
-
-      input[type="text"]:focus,
-      input[type="email"]:focus,
-      input[type="password"]:focus {
-        outline: none;
-        border-color: #ff5a5f;
-        box-shadow: 0 0 0 3px rgba(255, 90, 95, 0.1);
-        background-color: #fff;
-      }
-
-      .input-group label {
-        position: absolute;
-        left: 18px;
-        top: -10px;
-        background: white;
-        padding: 0 8px;
-        font-size: 13px;
-        color: #7f8c8d;
-        font-weight: 500;
-        pointer-events: none;
-        transition: all 0.2s ease;
-      }
-
-      .gender-group {
-        display: flex;
-        justify-content: center;
-        gap: 24px;
-        margin: 16px 0 24px;
-      }
-
-      .gender-option {
-        display: flex;
-        align-items: center;
-      }
-
-      .gender-btn {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 100px;
-        padding: 12px;
-        border: 2px solid #e0e0e0;
-        border-radius: 10px;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        font-weight: 500;
-        color: #7f8c8d;
-      }
-
-      .gender-btn:hover {
-        border-color: #ff5a5f;
-      }
-
-      .gender-btn.active {
-        border-color: #ff5a5f;
-        background-color: rgba(255, 90, 95, 0.05);
-        color: #ff5a5f;
-      }
-
-      input[type="radio"]:checked + label.gender-btn {
-        border-color: #ff5a5f;
-        background-color: rgba(255, 90, 95, 0.05);
-        color: #ff5a5f;
-      }
-
-      .checkbox-group {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        margin: 10px 0 28px;
-        gap: 18px;
-      }
-
-      .checkbox-label {
-        display: flex;
-        align-items: center;
-        font-size: 15px;
-        color: #2c3e50;
-        cursor: pointer;
-        user-select: none;
-        position: relative;
-        padding-left: 32px;
-      }
-
-      .checkbox-custom {
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 22px;
-        height: 22px;
-        border: 2px solid #e0e0e0;
-        border-radius: 6px;
-        transition: all 0.2s ease;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-
-      .checkbox-label input[type="checkbox"]:checked + .checkbox-custom {
-        background-color: #ff5a5f;
-        border-color: #ff5a5f;
-      }
-
-      .checkbox-label input[type="checkbox"]:checked + .checkbox-custom::after {
-        content: "";
-        width: 6px;
-        height: 12px;
-        border: solid white;
-        border-width: 0 2px 2px 0;
-        transform: rotate(45deg);
-        position: absolute;
-        top: 2px;
-      }
-
-      .required::after {
-        content: " *";
-        color: #ff5a5f;
-      }
-
-      button {
-        width: 100%;
-        padding: 16px;
-        background: linear-gradient(135deg, #ff5a5f 0%, #e53935 100%);
-        color: white;
-        font-size: 17px;
-        font-weight: 600;
-        border: none;
-        border-radius: 10px;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        box-shadow: 0 4px 12px rgba(229, 57, 53, 0.25);
-        position: relative;
-        overflow: hidden;
-      }
-
-      button:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 6px 15px rgba(229, 57, 53, 0.35);
-      }
-
-      button:active {
-        transform: translateY(0);
-      }
-
-      button::after {
-        content: "";
-        position: absolute;
-        top: -50%;
-        left: -50%;
-        width: 200%;
-        height: 200%;
-        background: rgba(255, 255, 255, 0.2);
-        transform: rotate(30deg) translate(0, -150%);
-        transition: transform 0.8s;
-      }
-
-      button:hover::after {
-        transform: rotate(30deg) translate(0, 150%);
-      }
-    </style>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
   </head>
-  <body>
+  <body class="register-page">
     <div class="register-container">
       <h2>회원가입</h2>
-      <form action="/user/register" method="post">
-        <div class="input-group">
-          <input type="text" name="username" placeholder="아이디" required />
+      <form class="register-form" action="/user/register" method="POST">
+        <div class="register-input-group">
+          <input
+            type="text"
+            name="username"
+            class="register-input"
+            placeholder="아이디"
+            required
+          />
           <label for="username">아이디</label>
         </div>
 
-        <div class="input-group">
-          <input type="text" name="name" placeholder="이름" required />
+        <div class="register-input-group">
+          <input
+            type="text"
+            name="name"
+            class="register-input"
+            placeholder="이름"
+            required
+          />
           <label for="name">이름</label>
         </div>
 
-        <div class="gender-group">
-          <input type="radio" name="gender" id="male" value="남" required />
-          <label class="gender-btn" for="male">남성</label>
-
-          <input type="radio" name="gender" id="female" value="여" required />
-          <label class="gender-btn" for="female">여성</label>
-        </div>
-
-        <div class="input-group">
-          <input type="email" name="email" placeholder="이메일" required />
+        <div class="register-input-group">
+          <input
+            type="email"
+            name="email"
+            class="register-input"
+            placeholder="이메일"
+            required
+          />
           <label for="email">이메일</label>
         </div>
 
-        <div class="input-group">
-          <input type="text" name="phone" placeholder="휴대폰번호" required />
-          <label for="phone">휴대폰번호</label>
-        </div>
-
-        <div class="input-group">
-          <input type="text" name="address" placeholder="주소" required />
-          <label for="address">주소</label>
-        </div>
-
-        <div class="input-group">
+        <div class="register-input-group">
           <input
             type="password"
             name="password"
+            class="register-input"
             placeholder="비밀번호"
             required
           />
           <label for="password">비밀번호</label>
         </div>
 
+        <div class="register-input-group">
+          <input
+            type="password"
+            name="passwordConfirm"
+            class="register-input"
+            placeholder="비밀번호 확인"
+            required
+          />
+          <label for="passwordConfirm">비밀번호 확인</label>
+        </div>
+
+        <div class="gender-group">
+          <div class="gender-option">
+            <input type="radio" id="male" name="gender" value="male" required />
+            <label for="male" class="gender-btn">남성</label>
+          </div>
+          <div class="gender-option">
+            <input
+              type="radio"
+              id="female"
+              name="gender"
+              value="female"
+              required
+            />
+            <label for="female" class="gender-btn">여성</label>
+          </div>
+        </div>
+
         <div class="checkbox-group">
-          <label class="checkbox-label">
-            <input type="checkbox" name="agree_privacy" required />
+          <label class="checkbox-label required">
+            <input type="checkbox" required />
             <span class="checkbox-custom"></span>
-            <span class="required">개인정보 수집 및 이용 동의</span>
+            <span>이용약관에 동의합니다</span>
+          </label>
+          <label class="checkbox-label required">
+            <input type="checkbox" required />
+            <span class="checkbox-custom"></span>
+            <span>개인정보 수집 및 이용에 동의합니다</span>
           </label>
           <label class="checkbox-label">
-            <input type="checkbox" name="agree_sms" />
+            <input type="checkbox" />
             <span class="checkbox-custom"></span>
-            SMS 수신 동의
-          </label>
-          <label class="checkbox-label">
-            <input type="checkbox" name="agree_email" />
-            <span class="checkbox-custom"></span>
-            이메일 수신 동의
+            <span>마케팅 정보 수신에 동의합니다</span>
           </label>
         </div>
 
-        <button type="submit">가입하기</button>
+        <button type="submit" class="register-button">회원가입</button>
       </form>
     </div>
   </body>

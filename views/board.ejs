@@ -1,246 +1,54 @@
-<style>
-  .board-container {
-    max-width: 800px;
-    margin: 30px auto;
-    padding: 30px;
-    border-radius: 12px;
-    background-color: #ffffff;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
-    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  }
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>고객센터 게시판</title>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+  </head>
+  <body>
+    <div class="board-container">
+      <h2 class="board-title">고객센터 게시판</h2>
 
-  .board-title {
-    text-align: center;
-    color: #2c3e50;
-    margin-bottom: 25px;
-    font-weight: 700;
-    font-size: 28px;
-    padding-bottom: 15px;
-    border-bottom: 2px solid #eaeaea;
-  }
-
-  .board-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 25px;
-    padding-bottom: 15px;
-    border-bottom: 1px solid #eee;
-  }
-
-  .write-button {
-    display: inline-flex;
-    align-items: center;
-    padding: 10px 20px;
-    background-color: #3498db;
-    color: white !important;
-    text-decoration: none;
-    border-radius: 6px;
-    font-weight: 600;
-    transition: all 0.3s ease;
-    border: none;
-    font-size: 16px;
-    box-shadow: 0 2px 5px rgba(52, 152, 219, 0.3);
-  }
-
-  .write-button:hover {
-    background-color: #2980b9;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(52, 152, 219, 0.4);
-  }
-
-  .write-button::before {
-    content: "+";
-    margin-right: 8px;
-    font-size: 20px;
-  }
-
-  .post-list {
-    list-style: none;
-    padding: 0;
-  }
-
-  .post-item {
-    background: #fff;
-    border: 1px solid #eaeaea;
-    padding: 20px;
-    margin: 18px 0;
-    border-radius: 10px;
-    transition: all 0.3s ease;
-    position: relative;
-    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
-  }
-
-  .post-item:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    border-color: #d0e4f5;
-  }
-
-  .post-title {
-    font-size: 18px;
-    font-weight: 600;
-    color: #2c3e50;
-    margin-bottom: 8px;
-    display: block;
-  }
-
-  .post-title:hover {
-    color: #3498db;
-  }
-
-  .post-meta {
-    display: flex;
-    align-items: center;
-    color: #7f8c8d;
-    font-size: 14px;
-    margin-top: 12px;
-  }
-
-  .post-author {
-    display: flex;
-    align-items: center;
-  }
-
-  .post-author::before {
-    content: "•";
-    margin: 0 8px;
-    color: #ddd;
-  }
-
-  .reply {
-    margin-left: 40px;
-    background-color: #f9fbfd;
-    border-left: 3px solid #3498db;
-  }
-
-  .reply .post-title {
-    color: #3498db;
-  }
-
-  .action-links {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    display: flex;
-    gap: 10px;
-  }
-
-  .edit-link,
-  .delete-link {
-    font-size: 14px;
-    padding: 5px 12px;
-    border-radius: 4px;
-    text-decoration: none;
-    transition: all 0.2s;
-  }
-
-  .edit-link {
-    background-color: #f8f9fa;
-    color: #7f8c8d;
-    border: 1px solid #eaeaea;
-  }
-
-  .edit-link:hover {
-    background-color: #f1f8ff;
-    color: #3498db;
-    border-color: #d0e4f5;
-  }
-
-  .delete-link {
-    background-color: #f8f9fa;
-    color: #e74c3c;
-    border: 1px solid #fbe7e7;
-  }
-
-  .delete-link:hover {
-    background-color: #fef0f0;
-    border-color: #f5c6cb;
-  }
-
-  .back-container {
-    text-align: center;
-    margin-top: 40px;
-    padding-top: 20px;
-    border-top: 1px solid #eee;
-  }
-
-  .back-button {
-    display: inline-flex;
-    align-items: center;
-    padding: 12px 28px;
-    background-color: #2c3e50;
-    color: white;
-    text-decoration: none;
-    border-radius: 6px;
-    font-weight: 600;
-    transition: all 0.3s ease;
-    border: none;
-    font-size: 16px;
-  }
-
-  .back-button:hover {
-    background-color: #1a252f;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-  }
-
-  .back-button::before {
-    content: "←";
-    margin-right: 8px;
-  }
-
-  .empty-message {
-    text-align: center;
-    padding: 40px 20px;
-    color: #7f8c8d;
-    font-size: 16px;
-    border: 2px dashed #eaeaea;
-    border-radius: 10px;
-    margin: 30px 0;
-  }
-</style>
-
-<div class="board-container">
-  <h2 class="board-title">고객센터 게시판</h2>
-
-  <div class="board-header">
-    <div class="board-info">
-      <span>문의하신 내용에 대해 빠르고 정확하게 답변드리겠습니다.</span>
-    </div>
-    <a href="/board/new" class="write-button">글쓰기</a>
-  </div>
-
-  <% const filteredPosts = posts.filter(post =>
-  !post.title.startsWith('[공지]')); %>
-
-  <ul class="post-list">
-    <% if (filteredPosts.length === 0) { %>
-    <div class="empty-message">
-      등록된 게시글이 없습니다. 첫 번째 글을 작성해보세요!
-    </div>
-    <% } %> <% filteredPosts.forEach(post => { %>
-    <li class="post-item <%= post.parent_id ? 'reply' : '' %>">
-      <a href="/board/view/<%= post.id %>" class="post-title">
-        <%= post.parent_id ? '[답변] ' : '' %><%= post.title %>
-      </a>
-
-      <div class="post-meta">
-        <span class="post-date"
-          ><%= new Date(post.created_at).toLocaleDateString() %></span
-        >
-        <span class="post-author"><%= post.author %></span>
+      <div class="board-header">
+        <div class="board-info">
+          <span>문의하신 내용에 대해 빠르고 정확하게 답변드리겠습니다.</span>
+        </div>
+        <a href="/board/new" class="write-button">글쓰기</a>
       </div>
 
-      <div class="action-links">
-        <a href="/board/edit/<%= post.id %>" class="edit-link">수정</a>
-        <a href="/board/delete/<%= post.id %>" class="delete-link">삭제</a>
-      </div>
-    </li>
-    <% }) %>
-  </ul>
+      <% const filteredPosts = posts.filter(post =>
+      !post.title.startsWith('[공지]')); %>
 
-  <div class="back-container">
-    <a href="/" class="back-button">홈으로 돌아가기</a>
-  </div>
-</div>
+      <ul class="post-list">
+        <% if (filteredPosts.length === 0) { %>
+        <div class="empty-message">
+          등록된 게시글이 없습니다. 첫 번째 글을 작성해보세요!
+        </div>
+        <% } %> <% filteredPosts.forEach(post => { %>
+        <li class="post-item <%= post.parent_id ? 'reply' : '' %>">
+          <a href="/board/view/<%= post.id %>" class="post-title">
+            <%= post.parent_id ? '[답변] ' : '' %><%= post.title %>
+          </a>
+
+          <div class="post-meta">
+            <span class="post-date"
+              ><%= new Date(post.created_at).toLocaleDateString() %></span
+            >
+            <span class="post-author"><%= post.author %></span>
+          </div>
+
+          <div class="action-links">
+            <a href="/board/edit/<%= post.id %>" class="edit-link">수정</a>
+            <a href="/board/delete/<%= post.id %>" class="delete-link">삭제</a>
+          </div>
+        </li>
+        <% }) %>
+      </ul>
+
+      <div class="back-container">
+        <a href="/" class="back-button">홈으로 돌아가기</a>
+      </div>
+    </div>
+  </body>
+</html>
