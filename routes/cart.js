@@ -9,54 +9,60 @@ const db = new sqlite3.Database(dbPath);
 // 장바구니에 상품 추가
 router.get("/add/:id", (req, res) => {
   const productId = req.params.id;
+  const userId = req.session.userId;
 
   db.get("SELECT * FROM products WHERE id = ?", [productId], (err, product) => {
     if (err || !product) return res.status(404).send("상품 없음");
 
-    // 예: 세션에 cart 배열이 없으면 초기화
-    if (!req.session.cart) req.session.cart = {};
+    // 기존 장바구니 아이템 확인
+    db.get(
+      "SELECT * FROM cart_items WHERE user_id = ? AND product_id = ?",
+      [userId, productId],
+      (err, cartItem) => {
+        if (err) return res.status(500).send("장바구니 조회 실패");
 
-    // 수량 증가
-    if (req.session.cart[productId]) {
-      req.session.cart[productId]++;
-    } else {
-      req.session.cart[productId] = 1;
-    }
+        if (cartItem) {
+          // 수량 증가
+          db.run(
+            "UPDATE cart_items SET quantity = quantity + 1 WHERE user_id = ? AND product_id = ?",
+            [userId, productId]
+          );
+        } else {
+          // 새 아이템 추가
+          db.run(
+            "INSERT INTO cart_items (user_id, product_id, quantity) VALUES (?, ?, 1)",
+            [userId, productId]
+          );
+        }
 
-    res.redirect("/cart"); // 장바구니 페이지로 이동
+        res.redirect("/cart");
+      }
+    );
   });
 });
 
 // 장바구니 페이지 (목록 및 수량 보여주기)
 router.get("/", (req, res) => {
-  const cart = req.session.cart || {};
+  const userId = req.session.userId;
 
-  const ids = Object.keys(cart);
-  if (ids.length === 0) {
-    return res.render("cart", { items: [] });
-  }
-
-  const placeholders = ids.map(() => "?").join(",");
   db.all(
-    `SELECT * FROM products WHERE id IN (${placeholders})`,
-    ids,
+    `SELECT p.*, ci.quantity 
+     FROM cart_items ci 
+     JOIN products p ON ci.product_id = p.id 
+     WHERE ci.user_id = ?`,
+    [userId],
     (err, products) => {
       if (err) return res.send("장바구니 조회 실패");
 
       // 가격 포맷팅
-      products = products.map((p) => ({
+      const items = products.map((p) => ({
         ...p,
         formattedPrice: p.price.toLocaleString("ko-KR"),
+        total: p.price * p.quantity,
+        formattedTotal: (p.price * p.quantity).toLocaleString("ko-KR"),
       }));
 
-      res.render("cart", {
-        items: products.map((p) => ({
-          ...p,
-          quantity: cart[p.id],
-          total: p.price * cart[p.id],
-          formattedTotal: (p.price * cart[p.id]).toLocaleString("ko-KR"),
-        })),
-      });
+      res.render("cart", { items });
     }
   );
 });
@@ -64,17 +70,25 @@ router.get("/", (req, res) => {
 // 장바구니에서 상품 제거
 router.post("/remove/:id", (req, res) => {
   const productId = req.params.id;
+  const userId = req.session.userId;
 
-  if (req.session.cart && req.session.cart[productId]) {
-    delete req.session.cart[productId];
-  }
-
-  res.redirect("/cart");
+  db.run(
+    "DELETE FROM cart_items WHERE user_id = ? AND product_id = ?",
+    [userId, productId],
+    (err) => {
+      if (err) return res.status(500).send("장바구니 삭제 실패");
+      res.redirect("/cart");
+    }
+  );
 });
 
 router.post("/checkout", (req, res) => {
-  req.session.cart = {}; // 장바구니 비우기
-  res.redirect("checkout/complete"); // 결제 완료 페이지로 리다이렉트
+  const userId = req.session.userId;
+
+  db.run("DELETE FROM cart_items WHERE user_id = ?", [userId], (err) => {
+    if (err) return res.status(500).send("장바구니 비우기 실패");
+    res.redirect("checkout/complete");
+  });
 });
 
 router.get("/checkout/complete", (req, res) => {

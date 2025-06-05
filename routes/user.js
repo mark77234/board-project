@@ -87,6 +87,7 @@ router.post("/login", (req, res) => {
       const match = await bcrypt.compare(password, user.password);
       if (match) {
         req.session.user = user;
+        req.session.userId = user.id;
         res.redirect("/product");
       } else {
         res.render("login_failed", {

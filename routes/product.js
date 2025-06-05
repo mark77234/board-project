@@ -17,12 +17,70 @@ router.get("/", (req, res) => {
 // POST /product - 장바구니에 상품 추가
 router.post("/", (req, res) => {
   const productId = req.body.productId;
-  console.log("장바구니에 담긴 상품 ID:", productId);
+  const userId = req.session.userId;
 
-  // 장바구니 로직은 세션이나 DB에 따라 구현 필요
-  // 예시: req.session.cart.push(productId);
+  // 로그인 체크를 더 엄격하게 수행
+  if (!userId || typeof userId !== "number") {
+    return res.status(401).json({
+      success: false,
+      message: "로그인이 필요합니다. 로그인 후 다시 시도해주세요.",
+    });
+  }
 
-  res.redirect("/product");
+  db.get("SELECT * FROM products WHERE id = ?", [productId], (err, product) => {
+    if (err || !product) {
+      return res.status(404).json({
+        success: false,
+        message: "상품을 찾을 수 없습니다.",
+      });
+    }
+
+    // 기존 장바구니 아이템 확인
+    db.get(
+      "SELECT * FROM cart_items WHERE user_id = ? AND product_id = ?",
+      [userId, productId],
+      (err, cartItem) => {
+        if (err) {
+          return res.status(500).json({
+            success: false,
+            message: "장바구니 조회 실패",
+          });
+        }
+
+        if (cartItem) {
+          // 수량 증가
+          db.run(
+            "UPDATE cart_items SET quantity = quantity + 1 WHERE user_id = ? AND product_id = ?",
+            [userId, productId],
+            (err) => {
+              if (err) {
+                return res.status(500).json({
+                  success: false,
+                  message: "장바구니 수정 실패",
+                });
+              }
+              res.redirect("/product");
+            }
+          );
+        } else {
+          // 새 아이템 추가
+          db.run(
+            "INSERT INTO cart_items (user_id, product_id, quantity) VALUES (?, ?, 1)",
+            [userId, productId],
+            (err) => {
+              if (err) {
+                return res.status(500).json({
+                  success: false,
+                  message: "장바구니 추가 실패",
+                });
+              }
+              res.redirect("/product");
+            }
+          );
+        }
+      }
+    );
+  });
 });
 
 module.exports = router;
