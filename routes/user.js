@@ -70,8 +70,18 @@ router.post("/login", (req, res) => {
     "SELECT * FROM users WHERE username = ?",
     [username],
     async (err, user) => {
-      if (err || !user) {
-        return res.send("존재하지 않는 사용자입니다.");
+      if (err) {
+        return res.render("login_failed", {
+          message: "로그인 처리 중 오류가 발생했습니다.",
+          errorType: "system",
+        });
+      }
+
+      if (!user) {
+        return res.render("login_failed", {
+          message: "존재하지 않는 아이디입니다.",
+          errorType: "username",
+        });
       }
 
       const match = await bcrypt.compare(password, user.password);
@@ -79,7 +89,10 @@ router.post("/login", (req, res) => {
         req.session.user = user;
         res.redirect("/product");
       } else {
-        res.send("비밀번호가 일치하지 않습니다.");
+        res.render("login_failed", {
+          message: "비밀번호가 일치하지 않습니다.",
+          errorType: "password",
+        });
       }
     }
   );
