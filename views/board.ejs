@@ -38,10 +38,12 @@
             <span class="post-author"><%= post.author %></span>
           </div>
 
+          <% if (user && post.author === user.username) { %>
           <div class="action-links">
             <a href="/board/edit/<%= post.id %>" class="edit-link">수정</a>
             <a href="/board/delete/<%= post.id %>" class="delete-link">삭제</a>
           </div>
+          <% } %>
         </li>
         <% }) %>
       </ul>

@@ -35,7 +35,7 @@ router.get("/", (req, res) => {
     [],
     (err, posts) => {
       if (err) return res.send("목록 불러오기 실패");
-      res.render("board", { posts });
+      res.render("board", { posts, user: req.session.user });
     }
   );
 });
@@ -119,45 +119,74 @@ router.get("/reply/:id", (req, res) => {
 
 // 수정 폼
 router.get("/edit/:id", (req, res) => {
+  if (!req.session.user) {
+    return res.status(403).send("로그인이 필요합니다.");
+  }
+
   db.get("SELECT * FROM posts WHERE id = ?", [req.params.id], (err, post) => {
     if (err || !post) return res.send("글 없음");
+    if (post.author !== req.session.user.username) {
+      return res.status(403).send("수정 권한이 없습니다.");
+    }
     res.render("post", { post });
   });
 });
 
 // 수정 처리 (파일 업로드 지원)
 router.post("/edit/:id", upload.array("files"), (req, res) => {
-  const { title, content } = req.body;
-  db.run(
-    "UPDATE posts SET title = ?, content = ? WHERE id = ?",
-    [title, content, req.params.id],
-    (err) => {
-      if (err) return res.send("수정 실패");
-      // Insert new files if uploaded
-      if (req.files && req.files.length > 0) {
-        const stmt = db.prepare(
-          "INSERT INTO files (post_id, filename, filepath) VALUES (?, ?, ?)"
-        );
-        req.files.forEach((file) => {
-          const filename = file.originalname;
-          const filepath = path.join("uploads", path.basename(file.path));
-          stmt.run(req.params.id, filename, filepath);
-        });
-        stmt.finalize(() => {
-          res.redirect("/board/view/" + req.params.id);
-        });
-      } else {
-        res.redirect("/board/view/" + req.params.id);
-      }
+  if (!req.session.user) {
+    return res.status(403).send("로그인이 필요합니다.");
+  }
+
+  db.get("SELECT * FROM posts WHERE id = ?", [req.params.id], (err, post) => {
+    if (err || !post) return res.send("글 없음");
+    if (post.author !== req.session.user.username) {
+      return res.status(403).send("수정 권한이 없습니다.");
     }
-  );
+
+    const { title, content } = req.body;
+    db.run(
+      "UPDATE posts SET title = ?, content = ? WHERE id = ?",
+      [title, content, req.params.id],
+      (err) => {
+        if (err) return res.send("수정 실패");
+        // Insert new files if uploaded
+        if (req.files && req.files.length > 0) {
+          const stmt = db.prepare(
+            "INSERT INTO files (post_id, filename, filepath) VALUES (?, ?, ?)"
+          );
+          req.files.forEach((file) => {
+            const filename = file.originalname;
+            const filepath = path.join("uploads", path.basename(file.path));
+            stmt.run(req.params.id, filename, filepath);
+          });
+          stmt.finalize(() => {
+            res.redirect("/board/view/" + req.params.id);
+          });
+        } else {
+          res.redirect("/board/view/" + req.params.id);
+        }
+      }
+    );
+  });
 });
 
 // 삭제
 router.get("/delete/:id", (req, res) => {
-  db.run("DELETE FROM posts WHERE id = ?", [req.params.id], (err) => {
-    if (err) return res.send("삭제 실패");
-    res.redirect("/board");
+  if (!req.session.user) {
+    return res.status(403).send("로그인이 필요합니다.");
+  }
+
+  db.get("SELECT * FROM posts WHERE id = ?", [req.params.id], (err, post) => {
+    if (err || !post) return res.send("글 없음");
+    if (post.author !== req.session.user.username) {
+      return res.status(403).send("삭제 권한이 없습니다.");
+    }
+
+    db.run("DELETE FROM posts WHERE id = ?", [req.params.id], (err) => {
+      if (err) return res.send("삭제 실패");
+      res.redirect("/board");
+    });
   });
 });
 
