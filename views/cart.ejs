@@ -4,6 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>장바구니 상세</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
     <style>
       body {
         font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
@@ -23,7 +27,7 @@
         font-weight: 700;
       }
       .container {
-        max-width: 600px;
+        max-width: 800px;
         margin: 0 auto;
         background: #fff;
         padding: 30px;
@@ -36,40 +40,163 @@
         color: #222;
         text-align: center;
       }
-      .product-detail {
+      .cart-item {
+        border-bottom: 1px solid #eee;
+        padding: 20px 0;
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr 0.5fr;
+        align-items: center;
+        gap: 20px;
+      }
+      .product-info {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      .product-name {
         font-size: 1.2rem;
-        margin-bottom: 20px;
-      }
-      .label {
         font-weight: 600;
-        color: #555;
       }
-      .value {
-        color: #111;
-        margin-left: 10px;
+      .product-price {
+        color: #666;
       }
-      .total {
+      .quantity-controls {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+      }
+      .quantity-btn {
+        width: 32px;
+        height: 32px;
+        background: #f5f5f5;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.2s;
+        font-size: 1.2rem;
+        color: #333;
+        padding: 0;
+      }
+      .quantity-btn:hover {
+        background: #e0e0e0;
+      }
+      .quantity {
+        font-size: 1.1rem;
+        font-weight: 600;
+        min-width: 40px;
+        text-align: center;
+      }
+      .item-total {
+        font-weight: 700;
+        color: #d32f2f;
+        text-align: right;
+        font-size: 1.1rem;
+      }
+      .remove-btn {
+        width: 32px;
+        height: 32px;
+        background: none;
+        border: none;
+        color: #999;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s;
+        padding: 0;
+        margin: 0 auto;
+      }
+      .remove-btn:hover {
+        color: #d32f2f;
+        transform: scale(1.1);
+      }
+      .remove-btn i {
+        font-size: 1.1rem;
+      }
+      .cart-summary {
+        margin-top: 30px;
+        padding-top: 20px;
+        border-top: 2px solid #eee;
+      }
+      .total-amount {
         font-size: 1.3rem;
         font-weight: 700;
         text-align: right;
-        margin-top: 30px;
         color: #d32f2f;
+        margin-bottom: 20px;
       }
-      .btn-back {
-        display: block;
+      .action-buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        margin-top: 20px;
+      }
+      .btn {
         width: 100%;
-        text-align: center;
-        margin-top: 40px;
-        padding: 12px 0;
-        background-color: #d32f2f;
-        color: white;
-        font-weight: 700;
+        padding: 14px 0;
+        border: none;
         border-radius: 6px;
+        font-weight: 600;
+        font-size: 1rem;
+        cursor: pointer;
+        text-align: center;
         text-decoration: none;
-        transition: background-color 0.3s ease;
+        transition: all 0.3s;
       }
-      .btn-back:hover {
-        background-color: #b71c1c;
+      .btn-continue {
+        background: #f5f5f5;
+        color: #333;
+      }
+      .btn-continue:hover {
+        background: #e0e0e0;
+      }
+      .btn-checkout {
+        background: #4caf50;
+        color: white;
+      }
+      .btn-checkout:hover {
+        background: #388e3c;
+      }
+      .empty-cart {
+        text-align: center;
+        padding: 40px 0;
+        color: #666;
+      }
+      .empty-cart i {
+        font-size: 48px;
+        color: #ddd;
+        margin-bottom: 20px;
+      }
+      .empty-cart h2 {
+        margin-bottom: 10px;
+        color: #333;
+      }
+      .empty-cart p {
+        color: #666;
+        margin-bottom: 20px;
+      }
+      @media (max-width: 600px) {
+        .cart-item {
+          grid-template-columns: 1fr;
+          text-align: center;
+          gap: 15px;
+        }
+        .product-info {
+          align-items: center;
+        }
+        .quantity-controls {
+          justify-content: center;
+        }
+        .item-total {
+          text-align: center;
+        }
+        .action-buttons {
+          flex-direction: column;
+        }
       }
     </style>
   </head>
@@ -78,63 +205,73 @@
       <a href="/">테무찬</a>
     </header>
     <div class="container">
-      <h1>장바구니 상세</h1>
-      <% items.forEach(function(item) { %>
-      <div class="product-detail">
-        <span class="label">상품명:</span>
-        <span class="value"><%= item.name %></span>
-      </div>
-      <div class="product-detail">
-        <span class="label">가격:</span>
-        <span class="value"><%= item.formattedPrice %> 원</span>
-      </div>
-      <div class="product-detail">
-        <span class="label">수량:</span>
-        <span class="value"><%= item.quantity %> 개</span>
-      </div>
-      <div class="total">총 합계: <%= item.formattedTotal %> 원</div>
-      <hr />
-      <form
-        action="/cart/remove/<%= item.id %>"
-        method="POST"
-        style="text-align: right"
-      >
-        <button
-          type="submit"
-          style="
-            background-color: transparent;
-            color: #d32f2f;
-            border: none;
-            font-weight: 600;
-            cursor: pointer;
-            margin-top: 5px;
-          "
+      <h1>장바구니</h1>
+      <% if (items && items.length > 0) { %> <% items.forEach(function(item) {
+      %>
+      <div class="cart-item">
+        <div class="product-info">
+          <div class="product-name"><%= item.name %></div>
+          <div class="product-price"><%= item.formattedPrice %> 원</div>
+        </div>
+        <div class="quantity-controls">
+          <form
+            action="/cart/decrease/<%= item.id %>"
+            method="POST"
+            style="margin: 0"
+          >
+            <button type="submit" class="quantity-btn">-</button>
+          </form>
+          <span class="quantity"><%= item.quantity %></span>
+          <form
+            action="/cart/increase/<%= item.id %>"
+            method="POST"
+            style="margin: 0"
+          >
+            <button type="submit" class="quantity-btn">+</button>
+          </form>
+        </div>
+        <div class="item-total"><%= item.formattedTotal %> 원</div>
+        <form
+          action="/cart/remove/<%= item.id %>"
+          method="POST"
+          style="margin: 0"
         >
-          ❌ 삭제
-        </button>
-      </form>
+          <button type="submit" class="remove-btn">
+            <i class="fas fa-trash"></i>
+          </button>
+        </form>
+      </div>
       <% }) %>
-      <a href="/product" class="btn-back">상품목록으로 돌아가기</a>
-      <form action="/cart/checkout" method="POST">
-        <button
-          type="submit"
-          style="
-            display: block;
-            width: 100%;
-            text-align: center;
-            margin-top: 10px;
-            padding: 12px 0;
-            background-color: #4caf50;
-            color: white;
-            font-weight: 700;
-            border-radius: 6px;
-            border: none;
-            cursor: pointer;
-          "
+      <div class="cart-summary">
+        <div class="total-amount">
+          총 합계: <%= items.reduce((sum, item) => sum + item.total,
+          0).toLocaleString('ko-KR') %> 원
+        </div>
+        <div class="action-buttons">
+          <a href="/product" class="btn btn-continue">쇼핑 계속하기</a>
+          <form
+            action="/cart/checkout"
+            method="POST"
+            style="width: 100%; margin: 0"
+          >
+            <button type="submit" class="btn btn-checkout">결제하기</button>
+          </form>
+        </div>
+      </div>
+      <% } else { %>
+      <div class="empty-cart">
+        <i class="fas fa-shopping-cart"></i>
+        <h2>장바구니가 비어있습니다</h2>
+        <p>원하는 상품을 장바구니에 담아보세요</p>
+        <a
+          href="/product"
+          class="btn btn-continue"
+          style="display: inline-block; margin-top: 20px; text-decoration: none"
         >
-          결제하기
-        </button>
-      </form>
+          쇼핑하러 가기
+        </a>
+      </div>
+      <% } %>
     </div>
   </body>
 </html>

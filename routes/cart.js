@@ -11,6 +11,13 @@ router.get("/add/:id", (req, res) => {
   const productId = req.params.id;
   const userId = req.session.userId;
 
+  if (!userId) {
+    return res.status(401).json({
+      success: false,
+      message: "로그인이 필요합니다.",
+    });
+  }
+
   db.get("SELECT * FROM products WHERE id = ?", [productId], (err, product) => {
     if (err || !product) return res.status(404).send("상품 없음");
 
@@ -45,6 +52,10 @@ router.get("/add/:id", (req, res) => {
 router.get("/", (req, res) => {
   const userId = req.session.userId;
 
+  if (!userId) {
+    return res.redirect("/user/login");
+  }
+
   db.all(
     `SELECT p.*, ci.quantity 
      FROM cart_items ci 
@@ -67,10 +78,83 @@ router.get("/", (req, res) => {
   );
 });
 
+// 수량 증가
+router.post("/increase/:id", (req, res) => {
+  const productId = req.params.id;
+  const userId = req.session.userId;
+
+  if (!userId) {
+    return res.status(401).json({
+      success: false,
+      message: "로그인이 필요합니다.",
+    });
+  }
+
+  db.run(
+    "UPDATE cart_items SET quantity = quantity + 1 WHERE user_id = ? AND product_id = ?",
+    [userId, productId],
+    (err) => {
+      if (err) return res.status(500).send("수량 증가 실패");
+      res.redirect("/cart");
+    }
+  );
+});
+
+// 수량 감소
+router.post("/decrease/:id", (req, res) => {
+  const productId = req.params.id;
+  const userId = req.session.userId;
+
+  if (!userId) {
+    return res.status(401).json({
+      success: false,
+      message: "로그인이 필요합니다.",
+    });
+  }
+
+  // 현재 수량 확인
+  db.get(
+    "SELECT quantity FROM cart_items WHERE user_id = ? AND product_id = ?",
+    [userId, productId],
+    (err, cartItem) => {
+      if (err) return res.status(500).send("장바구니 조회 실패");
+
+      if (cartItem.quantity <= 1) {
+        // 수량이 1이면 삭제
+        db.run(
+          "DELETE FROM cart_items WHERE user_id = ? AND product_id = ?",
+          [userId, productId],
+          (err) => {
+            if (err) return res.status(500).send("상품 삭제 실패");
+            res.redirect("/cart");
+          }
+        );
+      } else {
+        // 수량 감소
+        db.run(
+          "UPDATE cart_items SET quantity = quantity - 1 WHERE user_id = ? AND product_id = ?",
+          [userId, productId],
+          (err) => {
+            if (err) return res.status(500).send("수량 감소 실패");
+            res.redirect("/cart");
+          }
+        );
+      }
+    }
+  );
+});
+
 // 장바구니에서 상품 제거
 router.post("/remove/:id", (req, res) => {
   const productId = req.params.id;
   const userId = req.session.userId;
+
+  if (!userId) {
+    return res.status(401).json({
+      success: false,
+      message: "로그인이 필요합니다.",
+    });
+  }
 
   db.run(
     "DELETE FROM cart_items WHERE user_id = ? AND product_id = ?",
@@ -84,6 +168,13 @@ router.post("/remove/:id", (req, res) => {
 
 router.post("/checkout", (req, res) => {
   const userId = req.session.userId;
+
+  if (!userId) {
+    return res.status(401).json({
+      success: false,
+      message: "로그인이 필요합니다.",
+    });
+  }
 
   db.run("DELETE FROM cart_items WHERE user_id = ?", [userId], (err) => {
     if (err) return res.status(500).send("장바구니 비우기 실패");
