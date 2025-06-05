@@ -125,7 +125,10 @@ router.get("/edit/:id", (req, res) => {
 
   db.get("SELECT * FROM posts WHERE id = ?", [req.params.id], (err, post) => {
     if (err || !post) return res.send("글 없음");
-    if (post.author !== req.session.user.username) {
+    if (
+      post.author !== req.session.user.username &&
+      !req.session.user.isAdmin
+    ) {
       return res.status(403).send("수정 권한이 없습니다.");
     }
     res.render("post", { post });
@@ -140,7 +143,10 @@ router.post("/edit/:id", upload.array("files"), (req, res) => {
 
   db.get("SELECT * FROM posts WHERE id = ?", [req.params.id], (err, post) => {
     if (err || !post) return res.send("글 없음");
-    if (post.author !== req.session.user.username) {
+    if (
+      post.author !== req.session.user.username &&
+      !req.session.user.isAdmin
+    ) {
       return res.status(403).send("수정 권한이 없습니다.");
     }
 
@@ -179,7 +185,10 @@ router.get("/delete/:id", (req, res) => {
 
   db.get("SELECT * FROM posts WHERE id = ?", [req.params.id], (err, post) => {
     if (err || !post) return res.send("글 없음");
-    if (post.author !== req.session.user.username) {
+    if (
+      post.author !== req.session.user.username &&
+      !req.session.user.isAdmin
+    ) {
       return res.status(403).send("삭제 권한이 없습니다.");
     }
 

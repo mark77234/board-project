@@ -38,12 +38,18 @@
             <span class="post-author"><%= post.author %></span>
           </div>
 
-          <% if (user && post.author === user.username) { %>
-          <div class="action-links">
+          <div
+            class="action-links <%= (!user || (post.author !== user.username && !user.isAdmin)) ? 'disabled' : '' %>"
+          >
+            <% if ((user && post.author === user.username) || (user &&
+            user.isAdmin)) { %>
             <a href="/board/edit/<%= post.id %>" class="edit-link">수정</a>
             <a href="/board/delete/<%= post.id %>" class="delete-link">삭제</a>
+            <% } else { %>
+            <span class="edit-link disabled">수정</span>
+            <span class="delete-link disabled">삭제</span>
+            <% } %>
           </div>
-          <% } %>
         </li>
         <% }) %>
       </ul>

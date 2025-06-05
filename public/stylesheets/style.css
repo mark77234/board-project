@@ -1108,3 +1108,36 @@ input[type="radio"]:checked + label.gender-btn {
     justify-content: center;
   }
 }
+
+.action-links.disabled {
+  opacity: 0.5;
+  filter: blur(1px);
+  pointer-events: none;
+}
+
+.action-links.disabled .edit-link,
+.action-links.disabled .delete-link {
+  color: #999;
+  text-decoration: none;
+  cursor: not-allowed;
+}
+
+.action-links .edit-link,
+.action-links .delete-link {
+  margin-left: 10px;
+  color: #666;
+  text-decoration: none;
+}
+
+.action-links .edit-link:hover,
+.action-links .delete-link:hover {
+  color: #333;
+}
+
+.action-links .delete-link {
+  color: #ff4444;
+}
+
+.action-links .delete-link:hover {
+  color: #cc0000;
+}
