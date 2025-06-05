@@ -59,4 +59,21 @@
       </div>
     </div>
   </body>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const deleteLinks = document.querySelectorAll(
+        ".delete-link:not(.disabled)"
+      );
+
+      deleteLinks.forEach((link) => {
+        link.addEventListener("click", function (e) {
+          e.preventDefault();
+          const confirmed = confirm("정말로 이 게시물을 삭제하시겠습니까?");
+          if (confirmed) {
+            window.location.href = this.href;
+          }
+        });
+      });
+    });
+  </script>
 </html>
