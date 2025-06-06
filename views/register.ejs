@@ -49,6 +49,28 @@
 
         <div class="register-input-group">
           <input
+            type="tel"
+            name="phone"
+            class="register-input"
+            placeholder="전화번호"
+            required
+          />
+          <label for="phone">전화번호</label>
+        </div>
+
+        <div class="register-input-group">
+          <input
+            type="text"
+            name="address"
+            class="register-input"
+            placeholder="주소"
+            required
+          />
+          <label for="address">주소</label>
+        </div>
+
+        <div class="register-input-group">
+          <input
             type="password"
             name="password"
             class="register-input"
@@ -88,19 +110,19 @@
 
         <div class="checkbox-group">
           <label class="checkbox-label required">
-            <input type="checkbox" required />
-            <span class="checkbox-custom"></span>
-            <span>이용약관에 동의합니다</span>
-          </label>
-          <label class="checkbox-label required">
-            <input type="checkbox" required />
+            <input type="checkbox" name="agree_privacy" required />
             <span class="checkbox-custom"></span>
             <span>개인정보 수집 및 이용에 동의합니다</span>
           </label>
           <label class="checkbox-label">
-            <input type="checkbox" />
+            <input type="checkbox" name="agree_sms" />
             <span class="checkbox-custom"></span>
-            <span>마케팅 정보 수신에 동의합니다</span>
+            <span>SMS 수신에 동의합니다</span>
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" name="agree_email" />
+            <span class="checkbox-custom"></span>
+            <span>이메일 수신에 동의합니다</span>
           </label>
         </div>
 

@@ -551,33 +551,26 @@ body {
 }
 
 .gender-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100px;
-  padding: 12px;
-  border: 2px solid #e0e0e0;
-  border-radius: 10px;
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: var(--light);
+  border: 1px solid var(--border);
+  border-radius: 8px;
   cursor: pointer;
   transition: all 0.3s ease;
-  font-weight: 500;
-  color: #7f8c8d;
+  text-align: center;
+  min-width: 100px;
 }
 
 .gender-btn:hover {
-  border-color: #ff5a5f;
+  background-color: var(--white);
+  border-color: var(--primary);
 }
 
-.gender-btn.active {
-  border-color: #ff5a5f;
-  background-color: rgba(255, 90, 95, 0.05);
-  color: #ff5a5f;
-}
-
-input[type="radio"]:checked + label.gender-btn {
-  border-color: #ff5a5f;
-  background-color: rgba(255, 90, 95, 0.05);
-  color: #ff5a5f;
+input[type="radio"]:checked + .gender-btn {
+  background-color: var(--primary);
+  color: var(--white);
+  border-color: var(--primary);
 }
 
 .checkbox-group {
@@ -591,42 +584,38 @@ input[type="radio"]:checked + label.gender-btn {
 .checkbox-label {
   display: flex;
   align-items: center;
-  font-size: 15px;
-  color: #2c3e50;
+  gap: 10px;
   cursor: pointer;
-  user-select: none;
+  margin-bottom: 10px;
   position: relative;
-  padding-left: 32px;
+  padding-left: 30px;
 }
 
 .checkbox-custom {
   position: absolute;
   left: 0;
-  top: 0;
-  width: 22px;
-  height: 22px;
-  border: 2px solid #e0e0e0;
-  border-radius: 6px;
-  transition: all 0.2s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--border);
+  border-radius: 4px;
+  transition: all 0.3s ease;
 }
 
 .checkbox-label input[type="checkbox"]:checked + .checkbox-custom {
-  background-color: #ff5a5f;
-  border-color: #ff5a5f;
+  background-color: var(--primary);
+  border-color: var(--primary);
 }
 
 .checkbox-label input[type="checkbox"]:checked + .checkbox-custom::after {
-  content: "";
-  width: 6px;
-  height: 12px;
-  border: solid white;
-  border-width: 0 2px 2px 0;
-  transform: rotate(45deg);
+  content: "✓";
   position: absolute;
-  top: 2px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--white);
+  font-size: 14px;
 }
 
 .required::after {
@@ -1140,4 +1129,18 @@ input[type="radio"]:checked + label.gender-btn {
 
 .action-links .delete-link:hover {
   color: #cc0000;
+}
+
+input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
 }
